@@ -1,0 +1,174 @@
+/*shared css*/
+$test: 2px solid lightblue;
+$dark-brown: #24201e;
+$brown: #614d3b;
+$latte: #9f9089;
+$light-gray: #cac8c6;
+$ivory: #ece7e0;
+$title-font: "Yeseva One", serif;
+$text-font: "Libre Franklin", sans-serif;
+$rights-font: "Libre Barcode 128 Text", system-ui;
+
+@mixin square-style($width) {
+  outline: 2px solid;
+  flex-direction: column;
+  width: $width;
+  justify-content: center;
+  align-items: center;
+
+  .square {
+    width: $width;
+    height: calc(2rem + 1vh);
+    border-radius: 0.3rem;
+    margin: 0.8rem;
+  }
+
+  .square:nth-child(1) {
+    background-color: $dark-brown;
+  }
+
+  .square:nth-child(2) {
+    background-color: $brown;
+  }
+
+  .square:nth-child(3) {
+    background-color: $latte;
+  }
+
+  .square:nth-child(4) {
+    background-color: $light-gray;
+  }
+
+  .square:nth-child(5) {
+    background-color: $ivory;
+  }
+}
+
+body {
+  background-color: $ivory;
+  font-family: $text-font;
+}
+
+h1,
+h2,
+h3 {
+  font-family: $title-font;
+}
+
+::placeholder {
+  font-size: 1rem;
+  text-align: center;
+  color: $ivory;
+}
+
+/*starts*/
+main {
+  flex: 1;
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+  .container-up {
+    flex: 1;
+    width: 80%;
+    max-width: 500px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .container-down {
+    height: 20vh;
+    width: 100%;
+    background-color: $brown;
+  }
+
+  .container {
+    outline: 2px solid green;
+    font-family: $title-font;
+    color: $brown;
+    position: absolute;
+    top: 70%;
+    transform: translateY(-50%);
+    width: 100%;
+    h2 {
+      font-size: calc(1.3rem + 0.5vw);
+    }
+
+    h1 {
+      font-size: calc(1.7rem + 0.5vw);
+    }
+  }
+
+  .login-container {
+    background-color: rgba($dark-brown, 0.3);
+    width: 100%;
+    transform: translateY(-0.5rem);
+    padding: 1rem 0;
+    .login-content {
+      width: 100%;
+      display: flex;
+
+      .create-account {
+        width: 2.5rem;
+        transform: translate(20%, 100%);
+        background-color: $latte;
+        border-radius: 0.5rem;
+        padding: 0.7rem;
+
+        i {
+          color: $ivory;
+        }
+      }
+
+      .login-items {
+        outline: 2px solid yellow;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+
+        .img-container {
+          outline: 2px solid pink;
+          width: calc(8rem + 2vw);
+          max-width: 150px;
+          margin: 2rem auto 1rem;
+          img {
+            border-radius: 50%;
+          }
+        }
+
+        .login-input {
+          display: flex;
+          flex-direction: column;
+        }
+      }
+
+      .square-container {
+        width: 2.5rem;
+        transform: translateX(-50%);
+        @include square-style(1.2rem);
+      }
+    }
+  }
+}
+
+footer {
+  width: 100%;
+  background-color: $brown;
+  z-index: 0;
+  position: relative;
+
+  p {
+    font-size: calc(0.8rem + 1vw);
+    color: $ivory;
+    font-family: $rights-font;
+    padding-bottom: 0.5rem;
+  }
+}
+
+// @media screen and (min-width: 768px) {
+//   .login-container {
+//     .login-items {
+//       .login-items {
+//           flex-direction: row;
+//       }
+//     }
+//   }
+// }

@@ -8,9 +8,6 @@ import GalleryPage from "../src/pages/myGallery";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-
-
-
 function App() {
   return (
     <>
