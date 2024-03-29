@@ -18,8 +18,9 @@ const LoginInput = styled.input`
     width: 80%;
     max-width: 200px;
     color: white;
-    &:hover {
-      box-shadow: 0 0 0.5rem rgba(#cac8c6, 0.5);
+    &:hover,
+    &:focus {
+      box-shadow: inset 0 0 0 0.1rem #ece7e0;
     }
 `
 
@@ -32,6 +33,10 @@ const LoginButton = styled.button`
     padding: ${props =>props.login ? "0.8rem" : ""};
     font-size:  ${props =>props.login ? "1rem" : "0.7rem"};
     border-radius: 0.5rem;
+    &:active {
+      background-color: ${props =>props.login ? "#ece7e0": ""};
+      color: #9f9089;
+    }
 `
 
 export {
