@@ -11,13 +11,18 @@ const StyledSignupContainer = styled.div`
 
 const LoginInput = styled.input`
     background-color: #cac8c6;
-    padding: 0.8rem;
+    font-family: "Josefin Sans";
+    font-size: 1rem;
+    color: white;
+    padding: 0.8rem 0.8rem 0.5rem;
     margin: 0 auto 1rem;
     border-radius: 0.5rem;
     border: none;
     width: 80%;
     max-width: 200px;
-    color: white;
+    &::placeholder {
+      font-family: "Josefin Sans";
+    }
     &:hover,
     &:focus {
       box-shadow: inset 0 0 0 0.1rem #ece7e0;
@@ -27,10 +32,11 @@ const LoginInput = styled.input`
 const LoginButton = styled.button`
     background-color: ${props =>props.login ? "#9f9089":""};
     color: ${props =>props.login ? "white":"#ece7e0"};
+    font-family: "Josefin Sans";
     width: 80%;
     max-width: 200px;
     margin: ${props =>props.login ? "1rem auto 0":"0 auto"};
-    padding: ${props =>props.login ? "0.8rem" : ""};
+    padding: ${props =>props.login ? "0.8rem 0.8rem 0.5rem" : ""};
     font-size:  ${props =>props.login ? "1rem" : "0.7rem"};
     border-radius: 0.5rem;
     &:active {

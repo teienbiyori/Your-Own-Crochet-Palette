@@ -1,0 +1,111 @@
+/*shared css*/
+$test: 2px solid lightblue;
+$dark-brown: #24201e;
+$brown: #614d3b;
+$latte: #9f9089;
+$light-gray: #cac8c6;
+$ivory: #ece7e0;
+$title-font: "Limelight", sans-serif;
+$text-font: "Josefin Sans", sans-serif;
+$rights-font: "Libre Barcode 128 Text", system-ui;
+
+@mixin square-style($width) {
+  flex-direction: column;
+  width: $width;
+  justify-content: center;
+  align-items: center;
+
+  .square {
+    width: $width;
+    height: calc(2rem + 1vh);
+    border-radius: 0.3rem;
+    margin: 0.8rem;
+  }
+
+  .square:nth-child(1) {
+    background-color: $dark-brown;
+  }
+
+  .square:nth-child(2) {
+    background-color: $brown;
+  }
+
+  .square:nth-child(3) {
+    background-color: $latte;
+  }
+
+  .square:nth-child(4) {
+    background-color: $light-gray;
+  }
+
+  .square:nth-child(5) {
+    background-color: $ivory;
+  }
+}
+
+body {
+  background-color: $ivory;
+  font-family: $text-font;
+}
+
+h1,
+h2,
+h3 {
+  font-family: $title-font;
+}
+
+.rights {
+  font-family: $rights-font;
+}
+
+::placeholder {
+  font-size: 1rem;
+  text-align: center;
+  color: $ivory;
+}
+
+//starts
+.square-container {
+  width: 2.5rem;
+  @include square-style(5rem);
+  animation: fadeIn 0.8s ease-out 0.5s;
+  position: absolute;
+  right: -2.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  .square{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .hex-code {
+      font-size: 0.7rem;
+      color: white;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+      opacity: 0;
+      transform: translateX(-0.5rem) translateY(-50%);
+    }
+  30% {
+      opacity: 0;
+      transform: translateX(-0.5rem) translateY(-50%);
+    }
+  100% {
+      opacity: 1;
+      transform: translateX(0) translateY(-50%);
+    }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-0.5rem);
+  }
+};

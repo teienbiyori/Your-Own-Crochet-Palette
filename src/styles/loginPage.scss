@@ -5,8 +5,8 @@ $brown: #614d3b;
 $latte: #9f9089;
 $light-gray: #cac8c6;
 $ivory: #ece7e0;
-$title-font: "Yeseva One", serif;
-$text-font: "Libre Franklin", sans-serif;
+$title-font: "Limelight", sans-serif;
+$text-font: "Josefin Sans", sans-serif;
 $rights-font: "Libre Barcode 128 Text", system-ui;
 
 @mixin square-style($width) {
@@ -100,7 +100,7 @@ main {
   .login-container {
     background-color: rgba($dark-brown, 0.3);
     width: 100%;
-    transform: translateY(-0.5rem);
+    transform: translateY(-1rem);
     padding: 1rem 0;
     .login-content {
       width: 100%;
