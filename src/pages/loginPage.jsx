@@ -30,19 +30,27 @@ const LoginInput = styled.input`
 `
 
 const LoginButton = styled.button`
-    background-color: ${props =>props.login ? "#9f9089":""};
-    color: ${props =>props.login ? "white":"#ece7e0"};
+    background-color: #9f9089;
+    color: white;
     font-family: "Josefin Sans";
     width: 80%;
     max-width: 200px;
-    margin: ${props =>props.login ? "1rem auto 0":"0 auto"};
-    padding: ${props =>props.login ? "0.8rem 0.8rem 0.5rem" : ""};
-    font-size:  ${props =>props.login ? "1rem" : "0.7rem"};
+    margin: 1rem auto 0;
+    padding: 0.8rem 0.8rem 0.5rem;
+    font-size:  1rem;
     border-radius: 0.5rem;
     &:active {
-      background-color: ${props =>props.login ? "#ece7e0": ""};
+      background-color: #ece7e0;
       color: #9f9089;
     }
+`
+
+const ForgotButton = styled(LoginButton)`
+   background-color: transparent;
+   color: #ece7e0;
+   margin: 0 auto;
+   padding: 0;
+   font-size: 0.7rem;
 `
 
 export {
@@ -51,11 +59,11 @@ export {
   LoginButton as RegisterButton
 }
 
-export function SignupMainContainer({children, route}){
+export function SignupMainContainer({children, route, icon}){
   return(<>
     <main>
         <div className="container-up">
-          <div className="container">
+          <div className="login-wrapper">
             <h2>Craft Your Own</h2>
             <h1>Crochet Palette</h1>
             <div className="login-container">
@@ -63,7 +71,7 @@ export function SignupMainContainer({children, route}){
               <PrimaryColors />
               {children}
               <Link to={route}>
-              <TagBtn purpose="create-account" icon="fa-solid fa-user-plus"/>
+              <TagBtn purpose="create-account" icon={icon}/>
               </Link>
             </div>
           </div>
@@ -84,7 +92,7 @@ export function LoginInputItem(){
           <div className="login-input">
             <LoginInput type="text" placeholder="User Id"/>
             <LoginInput type="password" placeholder="Password"/>
-            <LoginButton >forgot password?</LoginButton>
+            <ForgotButton >forgot password?</ForgotButton>
             <LoginButton login>Login</LoginButton>
           </div>
         </div>
@@ -116,7 +124,7 @@ export default function LoginPage(){
   return(
     <>
     <StyledSignupContainer>
-      <SignupMainContainer route="/register">
+      <SignupMainContainer route="/register" icon="fa-solid fa-user-plus">
         <LoginInputItem/>
       </SignupMainContainer>
       <SignupFooter />

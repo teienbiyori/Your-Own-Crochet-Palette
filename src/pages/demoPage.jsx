@@ -1,24 +1,30 @@
 import PrimaryColors from "../components/primaryColors";
-// import { Suspense } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import "../styles/userPage.scss"
 
 const StyledMenuContainer = styled.div`
   width: 100%;
   height: 100vh;
+  min-height: 500px;
   display: flex;
 `
 const StyledLeftContainer = styled.div`
   position: relative;
   background-color: #614d3b;
   flex: 1;
-  .active {
-    animation: fadeOut 0.8s ease-out 1.5s;
+  &.active {
+    animation: fadeOut 1s ease-out;
   }
 `
 const StyledRightContainer = styled.div`
-  width: 3rem;
+  position: relative;
+  width: ${({width})=> width};
+  max-width: ${({maxW})=> maxW};
   padding: 1rem;
+  display: flex;
+  justify-content: center;
 `
 const StyledBrandContainer = styled.div`
   position: absolute;
@@ -35,32 +41,42 @@ const StyledBrandContainer = styled.div`
     font-size: calc(0.5rem + 1vw);
   }
 `
+export {
+  StyledMenuContainer as StyledMenuContainer,
+  StyledLeftContainer as StyledLeftContainer,
+  StyledRightContainer as StyledRightContainer,
+  StyledBrandContainer as StyledBrandContainer
+}
 
-function BrandName(){
+export function BrandName(){
   return(
     <>
-      <StyledBrandContainer>
         <h2>Craft Your Own</h2>
         <h1>Crochet Palette</h1>
         <p className="rights">© 2024 TEIENBIYORI - All Rights Reserved Worldwide.</p>
-      </StyledBrandContainer>
     </>
   )
 }
 
 
 export default function DemoPage(){
+  const [animate, setAnimate] = useState(false);
+  const navigate = useNavigate();
+  const handleClick = () =>{
+    setAnimate(!animate);
+    setTimeout(()=>{navigate("/login")},800);
+  };
   return(
     <>
-    {/* <Suspense fallback={<Loading/>}> */}
       <StyledMenuContainer>
-         <StyledLeftContainer>
-          <PrimaryColors first="#614d3b" second="#24201e" third="#9f9089" fourth="#cac8c6" fifth="#ece7e0"/>
-          <BrandName/>
+         <StyledLeftContainer className={animate? "active": ""} onClick={handleClick}>
+          <PrimaryColors first="#614d3b" second="#24201e" third="#9f9089" fourth="#cac8c6" fifth="#ece7e0" anime="pageChange userPageVersion"/>
+          <StyledBrandContainer>
+             <BrandName/>
+          </StyledBrandContainer>
          </StyledLeftContainer>
-         <StyledRightContainer />
+         <StyledRightContainer width="3rem"/>
       </StyledMenuContainer>
-      {/* </Suspense> */}
     </>
   )
 }

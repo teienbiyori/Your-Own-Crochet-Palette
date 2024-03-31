@@ -5,13 +5,17 @@ import UserPage from "../src/pages/userPage";
 import PalettePage from "../src/pages/myPalette";
 import CraftHubPage from "../src/pages/myCraftHub";
 import GalleryPage from "../src/pages/myGallery";
+import Loading from "./components/loading";
+import { Suspense } from "react";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 
 function App() {
   return (
     <>
     <BrowserRouter>
+      <Suspense fallback={<Loading />}>
       <Routes>
        <Route path="*" element={<DemoPage />}></Route>
        <Route path="login" element={<LoginPage />}></Route>
@@ -19,8 +23,9 @@ function App() {
        <Route path="user" element={<UserPage />}></Route>
        <Route path="palette" element={<PalettePage />}></Route>
        <Route path="crafthub" element={<CraftHubPage />}></Route>
-       <Route path="gallery" element={<GalleryPage />}></Route>
+       <Route path="gallery" element={<GalleryPage />}></Route>    
       </Routes>
+      </Suspense>
     </BrowserRouter>
     </>
   )

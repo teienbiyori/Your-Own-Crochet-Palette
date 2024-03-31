@@ -23,7 +23,7 @@ export default function RegisterPage(){
   return(
     <>
     <StyledSignupContainer>
-      <SignupMainContainer route="/login">
+      <SignupMainContainer route="/login" icon="fa-solid fa-rotate-left">
         <RegisterInputItem/>
       </SignupMainContainer>
       <SignupFooter />

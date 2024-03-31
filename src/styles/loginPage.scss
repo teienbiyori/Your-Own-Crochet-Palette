@@ -55,6 +55,10 @@ h3 {
   font-family: $title-font;
 }
 
+.rights {
+  font-family: $rights-font;
+}
+
 ::placeholder {
   font-size: 1rem;
   text-align: center;
@@ -64,7 +68,7 @@ h3 {
 /*starts*/
 main {
   flex: 1;
-  min-height: 600px;
+  min-height: 500px;
   display: flex;
   flex-direction: column;
   .container-up {
@@ -80,12 +84,13 @@ main {
     background-color: $brown;
   }
 
-  .container {
+  .login-wrapper {
     outline: 2px solid green;
+    animation: appear 0.5s ease-out;
     font-family: $title-font;
     color: $brown;
     position: absolute;
-    top: 70%;
+    top: 65%;
     transform: translateY(-50%);
     width: 100%;
     h2 {
@@ -160,6 +165,25 @@ footer {
     color: $ivory;
     font-family: $rights-font;
     padding-bottom: 0.5rem;
+  }
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+}
+
+@keyframes disappear {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
   }
 }
 
