@@ -61,7 +61,7 @@ export {
 
 export function SignupMainContainer({children, route, icon}){
   return(<>
-    <main>
+    <main className="signup-container">
         <div className="container-up">
           <div className="login-wrapper">
             <h2>Craft Your Own</h2>

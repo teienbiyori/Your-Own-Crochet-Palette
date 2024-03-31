@@ -25,6 +25,13 @@ function MenuLink({route, text, icon}){
     <a href={route}>{text}<i className={icon}></i></a>
   </>)
 }
+export function Menu(){
+  return(<>
+    <MenuLink route="/palette" text="My Palette " icon="fa-solid fa-swatchbook" />
+    <MenuLink route="/crafthub" text="My Craft Hub " icon="fa-solid fa-brush" />
+    <MenuLink route="/gallery" text="My Gallery " icon="fa-regular fa-image" />
+  </>)
+}
 
 export default function UserPage(){
   return(
@@ -45,9 +52,7 @@ export default function UserPage(){
         </div>
         <button className="edit"><i className="fa-regular fa-pen-to-square"></i></button>
         <div className="menu-container">
-          <MenuLink route="/palette" text="My Palette " icon="fa-solid fa-swatchbook" />
-          <MenuLink route="/crafthub" text="My Craft Hub " icon="fa-solid fa-brush" />
-          <MenuLink route="/gallery" text="My Gallery " icon="fa-regular fa-image" />
+          <Menu/>
         </div>
         <StyledMenuBrandContainer>
           <BrandName/>

@@ -1,3 +1,11 @@
+$dark-brown: #24201e;
+$brown: #614d3b;
+$latte: #9f9089;
+$light-gray: #cac8c6;
+$ivory: #ece7e0;
+$title-font: "Limelight", sans-serif;
+$text-font: "Josefin Sans", sans-serif;
+
 @keyframes popUp {
     0% {
       transform: scale(0.6);
@@ -77,4 +85,58 @@
         }
       }
     }
-  
+
+//palettePage
+    .palette-container {
+      position: relative;
+      margin: 3rem auto 2rem;
+      background-color: gray;
+
+      .name-container {
+        position: absolute;
+        left: -10px;
+        top: 10px;
+        background-color: cyan;
+        padding: 0.7rem 1.3rem;
+        border-radius: 0 1rem 1rem 0;
+
+        .palette-name {
+          font-size: 0.8rem;
+          color: white;
+        }
+      }
+
+      .btn-container {
+        position: absolute;
+        top: -5px;
+        right: 10px;
+
+        button {
+          width: 30px;
+          height: 30px;
+          background-color: green;
+          border-radius: 0 0 0.7rem 0.7rem;
+          padding: 0.5rem;
+          margin: 0 0.3rem;
+          color: pink;
+        }
+      }
+
+      .color-container {
+        position: relative;
+        top: 2.5rem;
+        padding: 1.5rem;
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+
+        .each-palette {
+          margin: 0.3rem;
+
+          input {
+            width: 2rem;
+            height: 2.5rem;
+          }
+        }
+      }
+    }
