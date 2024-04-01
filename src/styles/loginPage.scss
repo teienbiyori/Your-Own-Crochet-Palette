@@ -125,6 +125,7 @@ h3 {
 
       .login-items {
         outline: 2px solid yellow;
+        padding: 2rem 0;
         flex: 1;
         display: flex;
         flex-direction: column;
@@ -133,7 +134,7 @@ h3 {
           outline: 2px solid pink;
           width: calc(8rem + 2vw);
           max-width: 150px;
-          margin: 2rem auto 1rem;
+          margin: 0 auto 1rem;
           img {
             border-radius: 50%;
           }
@@ -142,6 +143,8 @@ h3 {
         .login-input {
           display: flex;
           flex-direction: column;
+          align-items: center;
+          outline: 2px solid peru;
         }
       }
 
@@ -154,13 +157,12 @@ h3 {
   }
 }
 
-footer {
+.signup-footer-bg {
   width: 100%;
   background-color: $brown;
   z-index: 0;
-  position: relative;
 
-  p {
+  .signup-footer {
     font-size: calc(0.8rem + 1vw);
     color: $ivory;
     font-family: $rights-font;

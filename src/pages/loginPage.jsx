@@ -1,6 +1,9 @@
 import PrimaryColors from "../components/primaryColors";
-import { Link } from "react-router-dom";
+import { login } from "../api/authToken";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import styled from "styled-components";
+import Swal from "sweetalert2";
 import "../styles/loginPage.scss"
 
 const StyledSignupContainer = styled.div`
@@ -9,17 +12,22 @@ const StyledSignupContainer = styled.div`
   height: 100vh;
 `
 
-const LoginInput = styled.input`
+const StyledLoginInput = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  max-width: 200px;
+  margin-bottom: 0.5rem;
+  input {
     background-color: #cac8c6;
     font-family: "Josefin Sans";
     font-size: 1rem;
     color: white;
     padding: 0.8rem 0.8rem 0.5rem;
-    margin: 0 auto 1rem;
+    // margin: 0 auto 1rem;
     border-radius: 0.5rem;
     border: none;
-    width: 80%;
-    max-width: 200px;
     &::placeholder {
       font-family: "Josefin Sans";
     }
@@ -27,6 +35,16 @@ const LoginInput = styled.input`
     &:focus {
       box-shadow: inset 0 0 0 0.1rem #ece7e0;
     }
+    &:invalid ~ span {
+    display: block;
+    } 
+  }
+  span {
+    text-align: center;
+    display: none;
+    font-size: 0.5rem;
+    margin-top: 0.2rem;
+  } 
 `
 
 const LoginButton = styled.button`
@@ -35,7 +53,7 @@ const LoginButton = styled.button`
     font-family: "Josefin Sans";
     width: 80%;
     max-width: 200px;
-    margin: 1rem auto 0;
+    margin-top: 1rem;
     padding: 0.8rem 0.8rem 0.5rem;
     font-size:  1rem;
     border-radius: 0.5rem;
@@ -51,6 +69,11 @@ const ForgotButton = styled(LoginButton)`
    margin: 0 auto;
    padding: 0;
    font-size: 0.7rem;
+   &:active {
+    background-color: transparent;
+    color: #9f9089;
+    transform: translateY(30%);
+   }
 `
 
 export {
@@ -82,7 +105,31 @@ export function SignupMainContainer({children, route, icon}){
   </>)
 }
 
-export function LoginInputItem(){
+export function LoginInput(props){
+  const {onChange, errorMessage, ...inputProps } = props;
+  return(<>
+  <StyledLoginInput>
+    <input {...inputProps} onChange={onChange}/>
+    <span>{errorMessage}</span>
+  </StyledLoginInput>
+  </>)
+}
+
+export function LoginInputItem({onChange, handleClick}){
+   const LoginInputs = [
+    {
+      id:1,
+      name:"email",
+      type:"text",
+      placeholder:"Email"
+    },
+    {
+      id:2,
+      name:"password",
+      type:"password",
+      placeholder:"Password"
+    }
+  ]
   return(
     <>
      <div className="login-items">
@@ -90,10 +137,11 @@ export function LoginInputItem(){
             <img src="https://cdn01.pinkoi.com/store/teienbiyori/logo/1/300x300.jpg" alt=""/>
           </div>
           <div className="login-input">
-            <LoginInput type="text" placeholder="User Id"/>
-            <LoginInput type="password" placeholder="Password"/>
+            {LoginInputs.map((input)=>(
+              <LoginInput key={input.id} {...input} required onChange={onChange}/>
+            ))}
             <ForgotButton >forgot password?</ForgotButton>
-            <LoginButton login>Login</LoginButton>
+            <LoginButton login onClick={handleClick}>Login</LoginButton>
           </div>
         </div>
     </>
@@ -110,10 +158,10 @@ function TagBtn({ purpose, icon }){
   )
 }
 
-export function SignupFooter(){
+export function SignupFooter({bg, font}){
   return(<>
-    <footer className="d-flex align-items-end justify-content-center">
-       <p className="rights">© 2024 TEIENBIYORI - All Rights Reserved Worldwide.</p>
+    <footer className={`d-flex align-items-end justify-content-center ${bg}`}>
+       <p className={`rights ${font}`}>© 2024 TEIENBIYORI - All Rights Reserved Worldwide.</p>
     </footer>
   </>)
 }
@@ -121,13 +169,51 @@ export function SignupFooter(){
 
 
 export default function LoginPage(){
+   const navigate =useNavigate();
+  const [userData, setUserData] = useState({
+    email:"",
+    password:"",
+  });
+  const onChange = (e) =>{
+    setUserData({...userData, [e.target.name]: e.target.value});
+    }
+  
+  const handleClick = async() =>{
+    if( userData.email.length===0 || userData.password.length <6){
+      alert('missing');
+      return;
+    }
+    console.log(userData);
+    const { success, token } = await login({...userData});
+    if(success){
+      localStorage.setItem("token:",token);
+      Swal.fire({
+        icon: "success",
+        title: "Let's get started!",
+        color: "#24201e",
+        background: "#ece7e0",
+        timer:1000,
+        showConfirmButton:false
+      });
+      setTimeout(()=>navigate("/user"),1000)
+      return;
+    }
+    Swal.fire({
+        icon: "error",
+        title: "Login Failed...",
+        color: "#24201e",
+        background: "#ece7e0",
+        timer:1000,
+        showConfirmButton:false
+    });
+  }
   return(
     <>
     <StyledSignupContainer>
       <SignupMainContainer route="/register" icon="fa-solid fa-user-plus">
-        <LoginInputItem/>
+        <LoginInputItem onChange={onChange} handleClick={handleClick}/>
       </SignupMainContainer>
-      <SignupFooter />
+      <SignupFooter bg= "signup-footer-bg" font="signup-footer"/>
     </StyledSignupContainer>
     </>
   )

@@ -132,7 +132,7 @@ export default function PalettePage(){
     </div>
   </div>
 </main>
-<SignupFooter/>
+<SignupFooter bg="main-footer-bg" font="main-footer"/>
     </>
   )
 }

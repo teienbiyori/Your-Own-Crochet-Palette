@@ -140,3 +140,14 @@ $text-font: "Josefin Sans", sans-serif;
         }
       }
     }
+
+.main-footer-bg {
+  width: 100%;
+  background-color: #24201e;
+  .main-footer {
+    color: #ece7e0;
+    padding-bottom: 0.3rem;
+    font-size: 0.8rem;
+  }
+}
+         
