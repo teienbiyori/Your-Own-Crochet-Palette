@@ -87,59 +87,38 @@ $text-font: "Josefin Sans", sans-serif;
     }
 
 //palettePage
-    .palette-container {
-      position: relative;
-      margin: 3rem auto 2rem;
-      background-color: gray;
-
-      .name-container {
-        position: absolute;
-        left: -10px;
-        top: 10px;
-        background-color: cyan;
-        padding: 0.7rem 1.3rem;
-        border-radius: 0 1rem 1rem 0;
-
-        .palette-name {
-          font-size: 0.8rem;
-          color: white;
-        }
+  .picker-container {
+    padding: 1.2rem 1rem 1rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    button {
+      width: 1.5rem;
+      height: 1.5rem;
+      padding: 0.2rem;
+      margin-left: 0.5rem;
+      border-radius: 50%;
+      i {
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
-
-      .btn-container {
-        position: absolute;
-        top: -5px;
-        right: 10px;
-
-        button {
-          width: 30px;
-          height: 30px;
-          background-color: green;
-          border-radius: 0 0 0.7rem 0.7rem;
-          padding: 0.5rem;
-          margin: 0 0.3rem;
-          color: pink;
-        }
+      &:hover {
+        background-color: #cac8c6;
       }
-
-      .color-container {
-        position: relative;
-        top: 2.5rem;
-        padding: 1.5rem;
-        width: 100%;
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
-
-        .each-palette {
-          margin: 0.3rem;
-
-          input {
-            width: 2rem;
-            height: 2.5rem;
-          }
-        }
+      &:active {
+        transform: scale(105%);
+        transform-origin: center;
       }
     }
+  }
+  .color-container {
+    padding: 1.2rem 1rem 1rem;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(20px, 1fr));
+  }
+
 
 .main-footer-bg {
   width: 100%;
@@ -151,3 +130,4 @@ $text-font: "Josefin Sans", sans-serif;
   }
 }
          
+

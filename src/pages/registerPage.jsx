@@ -13,7 +13,7 @@ function RegisterInputItem({handleClick, onChange}){
       placeholder:"Username",
       maxLength:"15",
       required:true,
-      errorMessage:"Up to 10 characters is acceptable."
+      errorMessage:"Up to 15 characters is acceptable."
     },
     {
       id:2,
@@ -69,7 +69,7 @@ export default function RegisterPage(){
   
   const handleClick = async() =>{
     if(userData.name.length ===0 || userData.email.length===0 || userData.password.length <6){
-      alert('missing');
+      alert("Mind quick check on the info? Thanks:)");
       return;
     }
     if(userData.password !== userData.checkpassword){
@@ -88,7 +88,8 @@ export default function RegisterPage(){
         showConfirmButton:false
       });
       navigate("/login");
-    }
+      return;
+    }else{
     Swal.fire({
         icon: "error",
         title: "Register Failed...",
@@ -97,6 +98,7 @@ export default function RegisterPage(){
         timer:1000,
         showConfirmButton:false
     });
+    }
   }
   return(
     <>

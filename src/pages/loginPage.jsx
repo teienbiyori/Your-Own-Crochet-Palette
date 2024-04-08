@@ -179,8 +179,8 @@ export default function LoginPage(){
     }
   
   const handleClick = async() =>{
-    if( userData.email.length===0 || userData.password.length <6){
-      alert('missing');
+    if( userData.email.length===0 || userData.password.length <3){
+      alert('Mind quick check on the info? Thanks:)');
       return;
     }
     console.log(userData);

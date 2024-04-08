@@ -15,7 +15,6 @@ function App() {
   return (
     <>
     <BrowserRouter>
-      <Suspense fallback={<Loading />}>
       <Routes>
        <Route path="*" element={<DemoPage />}></Route>
        <Route path="login" element={<LoginPage />}></Route>
@@ -25,7 +24,6 @@ function App() {
        <Route path="crafthub" element={<CraftHubPage />}></Route>
        <Route path="gallery" element={<GalleryPage />}></Route>    
       </Routes>
-      </Suspense>
     </BrowserRouter>
     </>
   )
