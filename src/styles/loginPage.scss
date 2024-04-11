@@ -10,7 +10,7 @@ $text-font: "Josefin Sans", sans-serif;
 $rights-font: "Libre Barcode 128 Text", system-ui;
 
 @mixin square-style($width) {
-  outline: 2px solid;
+  // outline: 2px solid;
   flex-direction: column;
   width: $width;
   justify-content: center;
@@ -85,7 +85,7 @@ h3 {
   }
 
   .login-wrapper {
-    outline: 2px solid green;
+    // outline: 2px solid green;
     animation: appear 0.5s ease-out;
     font-family: $title-font;
     color: $brown;
@@ -124,14 +124,14 @@ h3 {
       }
 
       .login-items {
-        outline: 2px solid yellow;
+        // outline: 2px solid yellow;
         padding: 2rem 0;
         flex: 1;
         display: flex;
         flex-direction: column;
 
         .img-container {
-          outline: 2px solid pink;
+          // outline: 2px solid pink;
           width: calc(8rem + 2vw);
           max-width: 150px;
           margin: 0 auto 1rem;
@@ -144,7 +144,7 @@ h3 {
           display: flex;
           flex-direction: column;
           align-items: center;
-          outline: 2px solid peru;
+          // outline: 2px solid peru;
         }
       }
 

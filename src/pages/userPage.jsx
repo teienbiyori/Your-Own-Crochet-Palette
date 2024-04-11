@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { StyledMenuContainer, StyledLeftContainer, StyledRightContainer, BrandName, StyledBrandContainer } from "./demoPage";
 import PrimaryColors from "../components/primaryColors";
 
@@ -5,6 +6,7 @@ import styled from "styled-components";
 import "../styles/craftPalette.scss";
 
 const StyledMenuBrandContainer = styled.div`
+  animation: appear 0.5s ease-out;
   position: absolute;
   bottom: 1rem;
   width: 80%;
@@ -34,13 +36,21 @@ export function Menu(){
 }
 
 export default function UserPage(){
+  const [screenW, setScreenW] = useState(window.innerWidth)
+  const handleResize = () =>{
+    setScreenW(window.innerWidth)
+  }
+  useEffect(()=>{
+    window.addEventListener("resize", handleResize)
+  },[])
+
   return(
     <>
     <StyledMenuContainer>
          <StyledLeftContainer>
           <PrimaryColors first="#24201e" second="#614d3b" third="#9f9089" fourth="#cac8c6" fifth="#ece7e0" anime="userPageVersion"/>
           <StyledBrandContainer>
-            <BrandName/>
+            {screenW>750? <BrandName/>:""}
           </StyledBrandContainer>
          </StyledLeftContainer>
          <StyledRightContainer width="85%" maxW="400px">
@@ -55,7 +65,7 @@ export default function UserPage(){
           <Menu/>
         </div>
         <StyledMenuBrandContainer>
-          <BrandName/>
+          {screenW<750? <BrandName/>:""}
         </StyledMenuBrandContainer>
       </div>
          </StyledRightContainer>

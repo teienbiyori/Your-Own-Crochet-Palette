@@ -1,7 +1,7 @@
 import { Menu } from "./userPage"
 import { SignupFooter } from "./loginPage"
 import { GetBrandPaletteData } from "../api/paletteLibrary"
-import { RenderColors } from "../pages/myCraftHub"
+import { RenderColors, RenderChosenColors } from "../pages/myCraftHub"
 import styled from "styled-components"
 import "../styles/craftPalette.scss"
 import { useState } from "react"
@@ -85,6 +85,7 @@ const StyledMainContainer  = styled.div`
 `
 const StyledWrapper = styled.div`
   border: 2px solid #cac8c6;
+  overflow-y: scroll;
   padding: 1rem;
   h3 {
     color: #24201e;
@@ -92,17 +93,17 @@ const StyledWrapper = styled.div`
 `
 const StyledMainPalette = styled.div`
   position: relative;
-  margin: 0.5rem 0 1.5rem;
-  background-color: rgba(202, 200, 198, 0.3);
+  margin: 1rem 0 0rem;
+  background-color: rgba(36, 32, 30, 0.2);
   .name-container {
-    background-color: #cac8c6;
+    background-color: #9f9089;
     padding: 0.5rem 1rem;
     border-radius: 0 1rem 1rem 0;
     width: fit-content; 
     transform: translateY(0.2rem) translateX(-0.5rem);
     .palette-name {
       font-size: 0.8rem;
-      color: white;
+      color: #ece7e0;
     }
   }
   .btn-container {
@@ -118,7 +119,7 @@ const StyledMainPalette = styled.div`
       margin: 0 0.3rem;
       color: #ece7e0;
       &:hover {
-        background-color: rgba(159, 144, 137, 0.7);
+        background-color: rgba(159, 144, 137, 0.8);
       }
       &:active {
         transform: translateY(0.2rem);
@@ -127,15 +128,14 @@ const StyledMainPalette = styled.div`
   }
 `
 const StyledColorSquare =styled.div`
-  margin: 0.3rem;
-  height: 1rem;
-  width: 1rem;
-  outline: 0.1rem solid rgba(202, 200, 198, 0.3);
+  height: 1.5rem;
+  width: 1.1rem;
+  outline: 0.1rem solid rgba(36, 32, 30, 0.3);
   background-color:${props => props?.hexCode};
   .craft-page {
     cursor: pointer;
     &:hover {
-    outline: 0.1rem solid #cac8c6;
+    outline: 0.1rem solid rgba(36, 32, 30, 0.6);
     }
     &:active {
     transform: translateY(-0.2rem);
@@ -151,42 +151,43 @@ export {
 }
 
 export function MainHeader(){
+  const [showMenu, setShowMenu] = useState(false);
+  const handleShowMenu = () =>{
+    setShowMenu(!showMenu);
+  }
   return(<>
     <header>
      <div className="header-img-container">
       <img className="header-img" src="https://cdn01.pinkoi.com/store/teienbiyori/logo/1/300x300.jpg" alt=""/>
      </div>
      <h3>Craft Your Own Crochet Palette</h3>
-     <a className="menu-toggle-icon"><i className="fa-solid fa-ellipsis-vertical"></i></a>
-     <span className="menu-toggle">
+     <a className="menu-toggle-icon" onClick={handleShowMenu}><i className="fa-solid fa-ellipsis-vertical"></i></a>
+     <span style={{display:showMenu? "flex":"none"}}className="menu-toggle">
       < Menu/>
      </span>
 </header>
   </>)
 }
 
-function PaletteBtn({ btnId, btnClass, onClick}){
+export function PaletteBtn({ btnId, btnClass, onClick}){
   return(<>
     <button onClick={onClick}><i id={btnId} className={btnClass}></i></button>
   </>)
 }
 
-//lots of bug
-function ColorPicker({handleAddHex}){
-const [pickedColor, setPickedColor] = useState("ffffff")
-// const [myPalette, setMyPalette] = useState([])
+function ColorPicker(props){
+const [pickedColor, setPickedColor] = useState("")
 const handleGetHex = (e) =>{
   setPickedColor(e.hex);
   console.log("im color:",e.hex)
-  // console.log("im the one been setted:",pickedColor);
+  console.log("im the one been setted:",pickedColor);
 }
-// const handleAddHex = ()=>{
-//   if(pickedColor===""){
-//     return;
-//   }
-//   setMyPalette( prevP => [...prevP, pickedColor]);
-//   console.log(myPalette)
-// }
+const handleAddHex = ()=>{
+  if(pickedColor===""){
+    return;
+  }
+  props.onChildData(pickedColor)
+}
 
   return(<>
   <div className="picker-container">
@@ -199,7 +200,7 @@ const handleGetHex = (e) =>{
   </>)
 }
 
-export function PaletteContainer({ picker, children, paletteName, colors}){
+export function PaletteContainer({ picker, children, paletteName, colorContainer,colors}){
   return(
   <>
     <StyledMainPalette>
@@ -210,7 +211,7 @@ export function PaletteContainer({ picker, children, paletteName, colors}){
         <h3 className="palette-name">{paletteName}</h3>
       </div>
         {picker}
-      <div className="color-container d-flex">
+      <div className={colorContainer}>
         {colors}
       </div>
     </StyledMainPalette>
@@ -240,12 +241,18 @@ export default function PalettePage(){
   }
 
   const [myPalette, setMyPalette] = useState([]);
-  const handleAddHex = ()=>{
-  if(pickedColor===""){
-    return;
+  const handleAddToMine = (pickedColor) =>{
+    if(myPalette.includes(pickedColor)){
+      alert("The color you've selected has already been picked :D")
+      return;
+    }
+    setMyPalette(prev => [...prev, pickedColor])
   }
-  setMyPalette( prevP => [...prevP, pickedColor]);
-  console.log(myPalette)
+
+  const [showPalette, setShowPalette] = useState(true);
+  const handleShowPalette = () =>{
+    setShowPalette(!showPalette)
+    console.log(showPalette)
   }
 
   return(
@@ -256,19 +263,28 @@ export default function PalettePage(){
     <StyledMainContainer>
       <StyledWrapper>
         <h3># My Palette</h3>
-    <PaletteContainer picker={<ColorPicker handleAddHex={handleAddHex}/>} colors={<RenderColors/>} paletteName="Create your Own">
+    <PaletteContainer 
+    picker={<ColorPicker  onChildData={handleAddToMine}/>} colorContainer="color-container" colors={showPalette? <RenderChosenColors array={myPalette}/>: ""} paletteName="Create your Own">
       <PaletteBtn btnId="mode-change" btnClass="fa-solid fa-list" />
       <PaletteBtn btnId="edit-palette" btnClass="fa-solid fa-pen" />
     </PaletteContainer>
     {/* pickedPalettes add from here */}
-    {pickedPalettes?.map((brand)=>(<PaletteContainer key={brand.brandName} paletteName={brand.brandName} colors={<RenderColors brand={brand.brand}/>}>
+    {pickedPalettes?.map((brand)=>(
+    <PaletteContainer 
+    key={brand.brandName} 
+    paletteName={brand.brandName}
+    colorContainer="color-container" 
+    colors={showPalette? <RenderColors brand={brand.brand}/>: ""}>
       <PaletteBtn btnId={brand.brandName} btnClass="fa-solid fa-xmark" onClick={handleRemovePalette}/>
+      <PaletteBtn btnId="tag-close" btnClass="fa-solid fa-minus" onClick={handleShowPalette}/>
     </PaletteContainer>))}
       </StyledWrapper>
+      
       <StyledWrapper>
     <h3># Brand Palette</h3>
-    {brands.map((brand)=>(<PaletteContainer key={brand.brandName} paletteName={brand.brandName} colors={<RenderColors brand={brand.brand}/>}>
+    {brands.map((brand)=>(<PaletteContainer key={brand.brandName} paletteName={brand.brandName} colorContainer="color-container"  colors={showPalette? <RenderColors brand={brand.brand}/>: ""}>
       <PaletteBtn btnId={brand.brandName} btnClass="fa-solid fa-heart" onClick={handleAddPalette}/>
+      <PaletteBtn btnId="tag-close" btnClass="fa-solid fa-minus" onClick={handleShowPalette}/>
     </PaletteContainer>))}
 </StyledWrapper>
 </StyledMainContainer>

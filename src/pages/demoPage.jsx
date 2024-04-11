@@ -27,6 +27,7 @@ const StyledRightContainer = styled.div`
   justify-content: center;
 `
 const StyledBrandContainer = styled.div`
+  animation: appear 0.5s ease-out;
   position: absolute;
   right: 4rem;
   bottom: 2.5rem;
