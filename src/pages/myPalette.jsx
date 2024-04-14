@@ -1,11 +1,12 @@
 import { Menu } from "./userPage"
 import { SignupFooter } from "./loginPage"
-import { GetBrandPaletteData } from "../api/paletteLibrary"
+import { GetBrandPaletteData, GetMyFavBrands, AddBrandToMine, RemoveBrandFromMine } from "../api/GetBrandPaletteData"
 import { RenderColors, RenderChosenColors } from "../pages/myCraftHub"
 import styled from "styled-components"
 import "../styles/craftPalette.scss"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { ChromePicker } from "react-color"
+import { Link } from "react-router-dom"
 
 
 const baseURL = "http://34.125.232.84:8080";
@@ -24,9 +25,11 @@ header {
     top: 3rem;
     transform: translateY(-65%);
     width: 3rem;
-  }
-  .header-img {
+    height: 3rem;
     border-radius: 50%;
+    background-size: 100%;
+    background-position: -0.15rem;
+    background-image: url("https://cdn01.pinkoi.com/store/teienbiyori/logo/1/300x300.jpg");
   }
   h3 {
     color: #ece7e0;
@@ -127,27 +130,12 @@ const StyledMainPalette = styled.div`
     }
   }
 `
-const StyledColorSquare =styled.div`
-  height: 1.5rem;
-  width: 1.1rem;
-  outline: 0.1rem solid rgba(36, 32, 30, 0.3);
-  background-color:${props => props?.hexCode};
-  .craft-page {
-    cursor: pointer;
-    &:hover {
-    outline: 0.1rem solid rgba(36, 32, 30, 0.6);
-    }
-    &:active {
-    transform: translateY(-0.2rem);
-    }
-  }
-`
+
 
 export {
   StyledMenuToggle as StyledMenuToggle,
   StyledMainContainer as StyledMainContainer,
   StyledWrapper as StyledWrapper,
-  StyledColorSquare as StyledColorSquare,
 }
 
 export function MainHeader(){
@@ -157,9 +145,10 @@ export function MainHeader(){
   }
   return(<>
     <header>
-     <div className="header-img-container">
-      <img className="header-img" src="https://cdn01.pinkoi.com/store/teienbiyori/logo/1/300x300.jpg" alt=""/>
+      <Link to="/user">
+        <div className="header-img-container">
      </div>
+      </Link>
      <h3>Craft Your Own Crochet Palette</h3>
      <a className="menu-toggle-icon" onClick={handleShowMenu}><i className="fa-solid fa-ellipsis-vertical"></i></a>
      <span style={{display:showMenu? "flex":"none"}}className="menu-toggle">
@@ -221,23 +210,32 @@ export function PaletteContainer({ picker, children, paletteName, colorContainer
 
 
 export default function PalettePage(){
-  const { data } = GetBrandPaletteData(`${baseURL}/palettes`);
-  const firstBrand = data?.slice(0,30);
-  const secondBrand = data?.slice(29,95);
-  const thirdBrand = data?.slice(33,66);
-  const brands = [{"brandName":"MITCotton", "brand":firstBrand}, {"brandName":"SUHE", "brand":secondBrand},{"brandName":"test", "brand":thirdBrand}]
-
-  const [pickedPalettes, setpickedPalettes] = useState([]);
+  const myToken = localStorage.getItem("token")
+  const { data } = GetBrandPaletteData(`${baseURL}/brands`);
+  const brands = data;
+  const { favBrands } = GetMyFavBrands(myToken);
+  const [brandID, setBrandID] = useState("");
+  const [delBrandID, setDelBrandID] = useState("");
+  AddBrandToMine(myToken, brandID);
+  RemoveBrandFromMine(myToken, delBrandID)
+  
+ 
   const handleAddPalette = (e)=>{
-    for(const eachBrand of brands){
-      if(eachBrand.brandName === e.target.id){
-      setpickedPalettes(prev=>[...prev, eachBrand])
-      }
+    if(e.target.id.length===0){
+      return;
     }
+    setBrandID(e.target.id);
   } 
+
+  //update
+  useEffect(()=>{
+  },[]);
+
   const handleRemovePalette = (e)=>{
-    const updatedPalettes = pickedPalettes.filter((eachBrand) =>{ return eachBrand.brandName !== e.target.id})
-    setpickedPalettes(updatedPalettes)
+     if(e.target.id.length===0){
+      return;
+    }
+    setDelBrandID(e.target.id)
   }
 
   const [myPalette, setMyPalette] = useState([]);
@@ -252,7 +250,6 @@ export default function PalettePage(){
   const [showPalette, setShowPalette] = useState(true);
   const handleShowPalette = () =>{
     setShowPalette(!showPalette)
-    console.log(showPalette)
   }
 
   return(
@@ -268,22 +265,19 @@ export default function PalettePage(){
       <PaletteBtn btnId="mode-change" btnClass="fa-solid fa-list" />
       <PaletteBtn btnId="edit-palette" btnClass="fa-solid fa-pen" />
     </PaletteContainer>
-    {/* pickedPalettes add from here */}
-    {pickedPalettes?.map((brand)=>(
-    <PaletteContainer 
-    key={brand.brandName} 
-    paletteName={brand.brandName}
-    colorContainer="color-container" 
-    colors={showPalette? <RenderColors brand={brand.brand}/>: ""}>
-      <PaletteBtn btnId={brand.brandName} btnClass="fa-solid fa-xmark" onClick={handleRemovePalette}/>
+    {favBrands?.map((eachData)=>(
+      <PaletteContainer key={eachData._id} paletteName={eachData.brand.name} colorContainer="color-container"
+      colors={showPalette? <RenderColors brand={eachData.brand}/>: ""}>
+        <PaletteBtn btnId={eachData._id} btnClass="fa-solid fa-xmark" onClick={handleRemovePalette}/>
       <PaletteBtn btnId="tag-close" btnClass="fa-solid fa-minus" onClick={handleShowPalette}/>
-    </PaletteContainer>))}
+      </PaletteContainer>
+    ))}
       </StyledWrapper>
       
       <StyledWrapper>
     <h3># Brand Palette</h3>
-    {brands.map((brand)=>(<PaletteContainer key={brand.brandName} paletteName={brand.brandName} colorContainer="color-container"  colors={showPalette? <RenderColors brand={brand.brand}/>: ""}>
-      <PaletteBtn btnId={brand.brandName} btnClass="fa-solid fa-heart" onClick={handleAddPalette}/>
+    {brands?.map((brand)=>(<PaletteContainer key={brand.name} paletteName={brand.name} colorContainer="color-container" colors={<RenderColors brand={brand}/>}> 
+      <PaletteBtn btnId={brand._id} btnClass="fa-solid fa-heart" onClick={handleAddPalette}/>
       <PaletteBtn btnId="tag-close" btnClass="fa-solid fa-minus" onClick={handleShowPalette}/>
     </PaletteContainer>))}
 </StyledWrapper>

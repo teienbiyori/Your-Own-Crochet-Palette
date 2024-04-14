@@ -5,8 +5,6 @@ import UserPage from "../src/pages/userPage";
 import PalettePage from "../src/pages/myPalette";
 import CraftHubPage from "../src/pages/myCraftHub";
 import GalleryPage from "../src/pages/myGallery";
-import Loading from "./components/loading";
-import { Suspense } from "react";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 

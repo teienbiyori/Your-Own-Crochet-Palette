@@ -32,6 +32,7 @@ export function Menu(){
     <MenuLink route="/palette" text="My Palette " icon="fa-solid fa-swatchbook" />
     <MenuLink route="/crafthub" text="My Craft Hub " icon="fa-solid fa-brush" />
     <MenuLink route="/gallery" text="My Gallery " icon="fa-regular fa-image" />
+    <MenuLink text="Log Out " icon="fa-solid fa-right-from-bracket" />
   </>)
 }
 

@@ -186,7 +186,7 @@ export default function LoginPage(){
     console.log(userData);
     const { success, token } = await login({...userData});
     if(success){
-      localStorage.setItem("token:",token);
+      localStorage.setItem("token",token);
       Swal.fire({
         icon: "success",
         title: "Let's get started!",
