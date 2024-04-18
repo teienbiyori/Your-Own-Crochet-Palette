@@ -1,9 +1,8 @@
 import { Menu } from "./userPage"
 import { SignupFooter } from "./loginPage"
-import { GetBrandPaletteData, GetMyFavBrands, AddBrandToMine, RemoveBrandFromMine } from "../api/GetBrandPaletteData"
-import { RenderColors, RenderChosenColors } from "../pages/myCraftHub"
+import { GetBrandPaletteData, GetMyFavBrands, AddBrandToMine, RemoveBrandFromMine, GetMyPaletteColor, useAddColorToMine, useRemoveColorFromMine } from "../api/GetBrandPaletteData"
+import { StyledColorSquare } from "./myCraftHub"
 import styled from "styled-components"
-import "../styles/craftPalette.scss"
 import { useState, useEffect } from "react"
 import { ChromePicker } from "react-color"
 import { Link } from "react-router-dom"
@@ -97,7 +96,8 @@ const StyledWrapper = styled.div`
 const StyledMainPalette = styled.div`
   position: relative;
   margin: 1rem 0 0rem;
-  background-color: rgba(36, 32, 30, 0.2);
+  background-color: rgba(255, 255, 255, 0.5);
+
   .name-container {
     background-color: #9f9089;
     padding: 0.5rem 1rem;
@@ -130,8 +130,6 @@ const StyledMainPalette = styled.div`
     }
   }
 `
-
-
 export {
   StyledMenuToggle as StyledMenuToggle,
   StyledMainContainer as StyledMainContainer,
@@ -168,8 +166,6 @@ function ColorPicker(props){
 const [pickedColor, setPickedColor] = useState("")
 const handleGetHex = (e) =>{
   setPickedColor(e.hex);
-  console.log("im color:",e.hex)
-  console.log("im the one been setted:",pickedColor);
 }
 const handleAddHex = ()=>{
   if(pickedColor===""){
@@ -183,7 +179,6 @@ const handleAddHex = ()=>{
     <ChromePicker color={pickedColor} onChangeComplete={handleGetHex} disableAlpha={true}/>
     <div className="btn-wrapper">
     <button className="add-color" onClick={handleAddHex}><i className="fa-solid fa-plus"></i></button>
-    <button className="delete-color"><i className="fa-regular fa-trash-can"></i></button>
      </div>
     </div>
   </>)
@@ -208,17 +203,46 @@ export function PaletteContainer({ picker, children, paletteName, colorContainer
   ) 
 }
 
+function ShowcaseColors({brand}){
+    const handleGetHex = (e) =>{
+    console.log(e.target.id)
+  }
+    const brandPalette = brand.paletteIds;
+    return(<>
+      {brandPalette?.map((color)=>(<StyledColorSquare id={color.hexCode} key={color.paletteId} hexcode={color.hexCode} onClick={handleGetHex}/>))}
+    </>)
+}
+
+function ShowcaseChosenColors({array, onKidsData}){
+  const [picked, setPicked] = useState("");
+  const handleGetHex = (e) =>{
+    console.log(e.target.id)
+    setPicked(e.target.id)
+  }
+  const handleDelHex = ()=>{
+    if(picked===""){
+      return;
+    }
+    onKidsData(picked)
+  }
+    return(<>
+      <button className="delete-color" onClick={handleDelHex}><i className="fa-regular fa-trash-can"></i></button>
+      {array?.map((color)=>(<StyledColorSquare id={color._id} key={color._id} hexcode={color.hexCode} onClick={handleGetHex}/>))}
+    </>)
+}
+
 
 export default function PalettePage(){
   const myToken = localStorage.getItem("token")
   const { data } = GetBrandPaletteData(`${baseURL}/brands`);
   const brands = data;
   const { favBrands } = GetMyFavBrands(myToken);
+  // const [myFavBrands, setMyFavBrands] = useState([]);
   const [brandID, setBrandID] = useState("");
   const [delBrandID, setDelBrandID] = useState("");
   AddBrandToMine(myToken, brandID);
   RemoveBrandFromMine(myToken, delBrandID)
-  
+  // setMyFavBrands(favBrands);
  
   const handleAddPalette = (e)=>{
     if(e.target.id.length===0){
@@ -226,27 +250,35 @@ export default function PalettePage(){
     }
     setBrandID(e.target.id);
   } 
-
-  //update
-  useEffect(()=>{
-  },[]);
-
   const handleRemovePalette = (e)=>{
      if(e.target.id.length===0){
       return;
     }
-    setDelBrandID(e.target.id)
+    setDelBrandID(e.target.id);
   }
 
-  const [myPalette, setMyPalette] = useState([]);
-  const handleAddToMine = (pickedColor) =>{
-    if(myPalette.includes(pickedColor)){
+  //alert is working, but favColors is not realtime
+  const { favColors } = GetMyPaletteColor(myToken);
+  const allColors = favColors?.map((color)=>(color.hexCode))
+  const [chosenColor, setChosenColor] = useState("");
+  const handleAddToMine = (pickedColor) =>{ 
+    if(allColors.includes(pickedColor)){
       alert("The color you've selected has already been picked :D")
       return;
+    }else{
+      setChosenColor(pickedColor);
     }
-    setMyPalette(prev => [...prev, pickedColor])
   }
+  useAddColorToMine(myToken, chosenColor)
 
+  const [chosenDelColor, setChosenDelColor] = useState("");
+  const handleRemoveFromMine = (picked) => {
+    setChosenDelColor(picked)
+  }
+  console.log(chosenDelColor)
+  useRemoveColorFromMine(myToken, chosenDelColor)
+
+  //minimize palette
   const [showPalette, setShowPalette] = useState(true);
   const handleShowPalette = () =>{
     setShowPalette(!showPalette)
@@ -261,13 +293,13 @@ export default function PalettePage(){
       <StyledWrapper>
         <h3># My Palette</h3>
     <PaletteContainer 
-    picker={<ColorPicker  onChildData={handleAddToMine}/>} colorContainer="color-container" colors={showPalette? <RenderChosenColors array={myPalette}/>: ""} paletteName="Create your Own">
+    picker={<ColorPicker  onChildData={handleAddToMine}/>} colorContainer="color-container" colors={showPalette? <ShowcaseChosenColors onKidsData={handleRemoveFromMine} array={favColors}/>: ""} paletteName="Create your Own">
       <PaletteBtn btnId="mode-change" btnClass="fa-solid fa-list" />
       <PaletteBtn btnId="edit-palette" btnClass="fa-solid fa-pen" />
     </PaletteContainer>
     {favBrands?.map((eachData)=>(
       <PaletteContainer key={eachData._id} paletteName={eachData.brand.name} colorContainer="color-container"
-      colors={showPalette? <RenderColors brand={eachData.brand}/>: ""}>
+      colors={showPalette? <ShowcaseColors brand={eachData.brand}/>: ""}>
         <PaletteBtn btnId={eachData._id} btnClass="fa-solid fa-xmark" onClick={handleRemovePalette}/>
       <PaletteBtn btnId="tag-close" btnClass="fa-solid fa-minus" onClick={handleShowPalette}/>
       </PaletteContainer>
@@ -276,7 +308,7 @@ export default function PalettePage(){
       
       <StyledWrapper>
     <h3># Brand Palette</h3>
-    {brands?.map((brand)=>(<PaletteContainer key={brand.name} paletteName={brand.name} colorContainer="color-container" colors={<RenderColors brand={brand}/>}> 
+    {brands?.map((brand)=>(<PaletteContainer key={brand.name} paletteName={brand.name} colorContainer="color-container" colors={<ShowcaseColors brand={brand}/>}> 
       <PaletteBtn btnId={brand._id} btnClass="fa-solid fa-heart" onClick={handleAddPalette}/>
       <PaletteBtn btnId="tag-close" btnClass="fa-solid fa-minus" onClick={handleShowPalette}/>
     </PaletteContainer>))}

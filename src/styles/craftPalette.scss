@@ -23,7 +23,7 @@ $text-font: "Josefin Sans", sans-serif;
     }
 }
 
-@mixin tiny-btn($bgc:#ece7e0) {
+@mixin tiny-btn($bgc:#cac8c6) {
 button {
     width: 1.5rem;
     height: 1.5rem;
@@ -119,22 +119,23 @@ button {
     justify-content: center;
     @include tiny-btn;
   }
-
-
-
   .color-container {
     padding: 1.2rem 1rem 1rem;
     width: 100%;
     display: grid;
     grid-gap: 0.5rem;
     grid-template-columns: repeat(auto-fill, minmax(1.5rem, 1fr));
+    @include tiny-btn;
+    .delete-color {
+      margin: 0;
+    }
   }
 
 
 
   //craft-page
   .crafthub-container {
-    @include tiny-btn($bgc:#cac8c6);
+    @include tiny-btn;
     display: flex;
     flex-direction: column; //>500px
     // flex-direction: row; //<500px
@@ -175,7 +176,7 @@ button {
     grid-template-columns: repeat(auto-fill, minmax(6rem, 1fr));
   }
   .path-palette {
-    background-color: rgba(36,32,30, 0.2);
+    background-color: rgba(36,32,30, 0.15);
     width: 100%;
     height: 2.5rem;
     margin: 0 0 0.5rem;
@@ -184,6 +185,14 @@ button {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    cursor: pointer;
+    &:hover {
+      background-color: rgba(36, 32, 30, 0.2);
+
+    }
+    &:active {
+      transform: scale(95%)
+    }
   }
 
   .selection-area {
@@ -192,7 +201,7 @@ button {
     justify-content: center;
     align-items: center;
     padding: 1rem;
-    background-color: rgba(36, 32, 30, 0.2);
+    background-color: rgba(255, 255, 255, 0.5);
     .selected {
       display: flex;
       justify-content: space-around;

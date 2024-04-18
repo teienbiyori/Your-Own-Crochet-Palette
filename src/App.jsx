@@ -8,7 +8,6 @@ import GalleryPage from "../src/pages/myGallery";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-
 function App() {
   return (
     <>
@@ -20,7 +19,7 @@ function App() {
        <Route path="user" element={<UserPage />}></Route>
        <Route path="palette" element={<PalettePage />}></Route>
        <Route path="crafthub" element={<CraftHubPage />}></Route>
-       <Route path="gallery" element={<GalleryPage />}></Route>    
+       <Route path="gallery" element={<GalleryPage />}></Route>  
       </Routes>
     </BrowserRouter>
     </>
