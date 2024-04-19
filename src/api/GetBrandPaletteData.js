@@ -141,12 +141,12 @@ export function RemoveMyCollection(myToken, collectionId){
     if(collectionId.length===0){
       return;
     }
-    axios.delete(`${authURL}/user/collections/${collectionId}`, {headers:{Authorization:"Bearer "+myToken}})
+    axios.delete(`${authURL}/user/collection/${collectionId}`, {headers:{Authorization:"Bearer "+myToken}})
     .then((response)=>{
       setDelId(response.data);
     })
     .catch((e)=>{
-      setError("[Failed getting favColors]:",e);
+      setError("[Failed getting favColors]:",e.response);
     })
   },[myToken, collectionId])
   return {delId, error}
@@ -156,13 +156,13 @@ export function AddSelectionToMine(myToken, colorArray){
   const [collectionId, setCollectionId] = useState(null);
   const [error, setError] = useState(null);
   useEffect(()=>{
-    if(colorArray.length>0){
+    if(colorArray?.length>0){
     axios.post(`${authURL}/user/collections`, {colorSchema:colorArray}, {headers:{Authorization:"Bearer "+myToken}})
     .then((response)=>{
       setCollectionId(response.data);
     })
     .catch((e)=>{
-      setError(e);
+      setError(e.response);
     })
     }
   },[myToken,colorArray])

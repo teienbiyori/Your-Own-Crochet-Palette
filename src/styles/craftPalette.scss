@@ -217,7 +217,6 @@ button {
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   grid-gap: 1rem;
   .each-pattern {
-    outline: 2px solid paleturquoise;
     display: flex;
   .pattern {
       width: 7rem;
@@ -243,10 +242,11 @@ button {
       border-radius: 0 0.5rem 0 0;
     }
     .fav-palette {
-      
       background-color: rgba(36, 32, 30, 0.2);
       padding: 0.5rem;
       border-radius: 0 0 0.5rem 0;
+      display: flex;
+      justify-content: space-around;
     }
    }
   }

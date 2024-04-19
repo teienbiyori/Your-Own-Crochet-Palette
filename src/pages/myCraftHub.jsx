@@ -92,26 +92,32 @@ function RenderChosenColors({array}){
     </>)
 }
 
-function RenderChosenPalette({array}){
+export function RenderChosenPalette({array}){
     return(<>
       {array?.map((color)=>(<StyledPaletteSquare id={color} key={color} hexcode={color}/>))}
     </>)
 }
 
 function CraftHubContainer({colorArray}){
-  const SnowfallPattern = ({path})=>(<Snowfall path={path} first="#614d3b" second="#24201e" third="#cac8c6" fourth="#9f9089"/>)
-  const HoneyPattern = ({path})=>(<Honey path={path} first="#614d3b" second="#24201e" third="#cac8c6" fourth="#9f9089"/>)
-  const AutumnPattern = ({path})=>(<Autumn path={path} first="#614d3b" second="#24201e" third="#cac8c6" fourth="#9f9089"/>)
-  const patternSlide = [ <SnowfallPattern key="snowfallPattern" path="path"/>, <HoneyPattern key="honeyPattern" path="path"/>, <AutumnPattern key="autumnPattern" path="path"/> ];
+  const SnowfallPattern = ({path, first, second, third, fourth})=>(<Snowfall path={path} first={first} second={second} third={third} fourth={fourth}/>)
+  const HoneyPattern = ({path, first, second, third, fourth})=>(<Honey path={path} first={first} second={second} third={third} fourth={fourth}/>)
+  const AutumnPattern = ({path, first, second, third, fourth})=>(<Autumn path={path} first={first} second={second} third={third} fourth={fourth}/>)
+
+  const patternSlide = [ <SnowfallPattern key="snowfallPattern" path="path" first="#614d3b" second="#24201e" third="#cac8c6" fourth="#9f9089"/>, <HoneyPattern key="honeyPattern" path="path" first="#614d3b" second="#24201e" third="#cac8c6" fourth="#9f9089"/>, <AutumnPattern key="autumnPattern" path="path" first="#614d3b" second="#24201e" third="#cac8c6" fourth="#9f9089"/> ];
+ 
+  useEffect(()=>{
+     const editSlide = [ <SnowfallPattern key="snowfallPattern" path="path-lg" first={colorArray[0]} second={colorArray[1]} third={colorArray[2]} fourth={colorArray[3]}/>, <HoneyPattern key="honeyPattern" path="path-lg" first={colorArray[0]} second={colorArray[1]} third={colorArray[2]} fourth={colorArray[3]}/>, <AutumnPattern key="autumnPattern" path="path-lg" first={colorArray[0]} second={colorArray[1]} third={colorArray[2]} fourth={colorArray[3]}/> ];
+     setEdit(editSlide)
+  }, [colorArray])
+  
   const [slide, setSlide] = useState(patternSlide);
-  // const EditPattern = [ <SnowfallPattern key="snowfallPatternLg" path="path-lg" first={colorArray[0]} second={colorArray[1]} third={colorArray[2]} fourth={colorArray[3]}/>, <HoneyPattern key="honeyPatternLg" path="path-lg" first={colorArray[0]} second={colorArray[1]} third={colorArray[2]} fourth={colorArray[3]}/>, <AutumnPattern key="autumnPatternLg" path="path-lg" first={colorArray[0]} second={colorArray[1]} third={colorArray[2]} fourth={colorArray[3]}/> ]
-  // const [edit, setEdit] = useState(EditPattern);
+  const [edit, setEdit] = useState([]);
 
   const handleSlideLeft =()=>{
     const updatedSlide = [...slide];
     setSlide((prevSlide)=> [...prevSlide.slice(1), updatedSlide[0]])
-    // const editSlide = [...edit];
-    // setEdit((prevSlide)=> [...prevSlide.slice(1), editSlide[0]])
+    const editSlide = [...edit];
+    setEdit((prevSlide)=> [...prevSlide.slice(1), editSlide[0]])
   }
 
   const handleSlideRight =()=>{
@@ -121,13 +127,13 @@ function CraftHubContainer({colorArray}){
     const updatedSlide = [lastElement, ...prevSlide.slice(0, lastIndex)]; // Move last element to the beginning
     return updatedSlide;
   });
-  //   setEdit((prevSlide) => {
-  //   const lastIndex = prevSlide.length - 1;
-  //   const lastElement = prevSlide[lastIndex];
-  //   const currentSlide = [lastElement, ...prevSlide.slice(0, lastIndex)]; // Move last element to the beginning
-  //   return currentSlide;
-  // });
-  }
+    setEdit((prevSlide) => {
+    const lastIndex = prevSlide.length - 1;
+    const lastElement = prevSlide[lastIndex];
+    const currentSlide = [lastElement, ...prevSlide.slice(0, lastIndex)]; 
+    return currentSlide;
+  });
+}
 
   return(<>
   <div className="crafthub-container">
@@ -141,14 +147,7 @@ function CraftHubContainer({colorArray}){
     </button>
   </div>
   <div className="path-area">
-    {slide?.[1]}
-    <Autumn
-  path="path-lg"
-  first={colorArray[0]}
-  second={colorArray[1]}
-  third={colorArray[2]}
-  fourth={colorArray[3]}
-/>
+    {edit?.[1]}
   </div>
   </div>
   </>)
@@ -164,9 +163,8 @@ function PaletteCollection({array, collectionId}){
   const handleRemoveCollection = ()=>{
     setDelId(collectionId)
   }
-  RemoveMyCollection(myToken, delId);
-  console.log(delId)
-
+ const {error} = RemoveMyCollection(myToken, delId);
+console.log(error)
   return(<>
   <div className="path-palette" onClick={delVersion? handleRemoveCollection: handleCollectionClicked }>
     <RenderChosenPalette array={array}/>
@@ -194,9 +192,10 @@ function PaletteSelector(){
 
   const handleAddCollection = () =>{
     const jsonSelection = JSON.stringify(colorSelection)
-    setColorArray(jsonSelection)
+    const jsonParseSelection = JSON.parse(jsonSelection)
+    setColorArray(jsonParseSelection)
   }
-   AddSelectionToMine(myToken, colorArray)
+  AddSelectionToMine(myToken, colorArray)
 
   //aviod 
   useEffect(()=>{},[colorSelection])
