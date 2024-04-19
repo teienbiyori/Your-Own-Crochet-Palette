@@ -1,5 +1,3 @@
-# Your-Own-Crochet-Palette
-
 # Craft Your Own Crochet Palette 
 ##### 為鉤針編織創作者設計的織片配色網站
 ##### かぎ針編みクリエーター向けのカラーコンビネーションウェブサイト
