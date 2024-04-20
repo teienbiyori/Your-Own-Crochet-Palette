@@ -2,11 +2,14 @@
 ##### 為鉤針編織創作者設計的織片配色網站
 ##### かぎ針編みクリエーター向けのカラーコンビネーションウェブサイト
 
-This webpage is tailored for crochet enthusiasts to store their personalized color palettes. 
-Users can apply these palettes directly to crochet patterns, offering a clearer visualization of how selected color combinations will appear on their products. By automating color blending and providing inspiration for combinations, this tool saves creators time and sparks new ideas for stunning color schemes.
-此網站功能包含：自選色、填色織片、隨機調換配色、儲存配色、配色織片展示。
-透過以上功能，可以立即且直觀地呈現織片的實際配色。
-你再也不用靠想像、手繪，或者實際把織片鉤出來才知道配色滿不滿意，輕鬆按幾個按鈕便能做到！
+This webpage is tailored for crochet enthusiasts to store their personalized color palettes.<br> 
+Users can apply these palettes directly to crochet patterns, offering a clearer visualization of how selected color combinations will appear on their products.<br>
+By automating color blending and providing inspiration for combinations, this tool saves creators time and sparks new ideas for stunning color schemes.<br>
+<span style="font-size:0.7rem">
+此網站功能包含：自選色、填色織片、隨機調換配色、儲存配色、配色織片展示。<br>
+透過以上功能，可以立即且直觀地呈現織片的實際配色。<br>
+你再也不用靠想像、手繪，或者實際把織片鉤出來才知道配色滿不滿意，輕鬆按幾個按鈕便能做到！<br>
+</span>
 
 ### Features
 1. **Users can create their own crochet palettes:**
@@ -47,7 +50,6 @@ npm install
 ```
 npm run dev
 ```
-<br>
 
 ### Dependnecies
 - axios: "^1.6.8"
