@@ -11,7 +11,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 function App() {
   return (
     <>
-    <BrowserRouter>
+    <BrowserRouter basename="/Your-Own-Crochet-Palette">
       <Routes>
        <Route path="*" element={<DemoPage />}></Route>
        <Route path="login" element={<LoginPage />}></Route>
