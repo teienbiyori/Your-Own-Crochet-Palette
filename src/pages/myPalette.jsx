@@ -3,12 +3,12 @@ import { SignupFooter } from "./loginPage"
 import { GetBrandPaletteData, GetMyFavBrands, AddBrandToMine, RemoveBrandFromMine, GetMyPaletteColor, useAddColorToMine, useRemoveColorFromMine } from "../api/GetBrandPaletteData"
 import { StyledColorSquare } from "./myCraftHub"
 import styled from "styled-components"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { ChromePicker } from "react-color"
 import { Link } from "react-router-dom"
 
 
-const baseURL = "http://34.125.232.84:8080";
+const baseURL = "http://54.250.240.16:8080";
 
 const StyledMenuToggle = styled.div`
 header {
