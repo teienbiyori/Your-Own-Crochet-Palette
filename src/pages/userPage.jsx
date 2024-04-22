@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { StyledMenuContainer, StyledLeftContainer, StyledRightContainer, BrandName, StyledBrandContainer } from "./demoPage";
 import PrimaryColors from "../components/primaryColors";
-
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import "../styles/craftPalette.scss";
 
@@ -28,10 +28,13 @@ function MenuLink({route, text, icon}){
   </>)
 }
 export function Menu(){
+  const location = useLocation();
+  const isUserPage = location.pathname === "/user";
   return(<>
-    <MenuLink route="/palette" text="My Palette " icon="fa-solid fa-swatchbook" />
-    <MenuLink route="/crafthub" text="My Craft Hub " icon="fa-solid fa-brush" />
-    <MenuLink route="/gallery" text="My Gallery " icon="fa-regular fa-image" />
+    <MenuLink route="/Your-Own-Crochet-Palette/palette" text="My Palette " icon="fa-solid fa-swatchbook" />
+    <MenuLink route="/Your-Own-Crochet-Palette/crafthub" text="My Craft Hub " icon="fa-solid fa-brush" />
+    <MenuLink route="/Your-Own-Crochet-Palette/gallery" text="My Gallery " icon="fa-regular fa-image" />
+    {isUserPage? "" : <MenuLink text="Log Out " icon="fa-solid fa-right-from-bracket" />}
   </>)
 }
 
