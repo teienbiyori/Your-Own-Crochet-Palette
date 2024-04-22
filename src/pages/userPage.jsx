@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { StyledMenuContainer, StyledLeftContainer, StyledRightContainer, BrandName, StyledBrandContainer } from "./demoPage";
 import PrimaryColors from "../components/primaryColors";
-import { useLocation } from "react-router-dom";
+import { Menu } from "../components/menuComponent"
 import styled from "styled-components";
 import "../styles/craftPalette.scss";
 
@@ -21,22 +21,6 @@ const StyledMenuBrandContainer = styled.div`
     font-size: calc(0.1rem + 1vw);
   }
 `
-
-function MenuLink({route, text, icon}){
-  return(<>
-    <a href={route}>{text}<i className={icon}></i></a>
-  </>)
-}
-export function Menu(){
-  const location = useLocation();
-  const isUserPage = location.pathname === "/user";
-  return(<>
-    <MenuLink route="/Your-Own-Crochet-Palette/palette" text="My Palette " icon="fa-solid fa-swatchbook" />
-    <MenuLink route="/Your-Own-Crochet-Palette/crafthub" text="My Craft Hub " icon="fa-solid fa-brush" />
-    <MenuLink route="/Your-Own-Crochet-Palette/gallery" text="My Gallery " icon="fa-regular fa-image" />
-    {isUserPage? "" : <MenuLink text="Log Out " icon="fa-solid fa-right-from-bracket" />}
-  </>)
-}
 
 export default function UserPage(){
   const [screenW, setScreenW] = useState(window.innerWidth)

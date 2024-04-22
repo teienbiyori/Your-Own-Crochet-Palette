@@ -1,4 +1,5 @@
 import PrimaryColors from "../components/primaryColors";
+import { Footer } from "../components/footer";
 import { login } from "../api/authToken";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -158,14 +159,6 @@ function TagBtn({ purpose, icon }){
   )
 }
 
-export function SignupFooter({bg, font}){
-  return(<>
-    <footer className={`d-flex align-items-end justify-content-center ${bg}`}>
-       <p className={`rights ${font}`}>© 2024 TEIENBIYORI - All Rights Reserved Worldwide.</p>
-    </footer>
-  </>)
-}
-
 
 
 export default function LoginPage(){
@@ -213,7 +206,7 @@ export default function LoginPage(){
       <SignupMainContainer route="/register" icon="fa-solid fa-user-plus">
         <LoginInputItem onChange={onChange} handleClick={handleClick}/>
       </SignupMainContainer>
-      <SignupFooter bg= "signup-footer-bg" font="signup-footer"/>
+      <Footer bg= "signup-footer-bg" font="signup-footer"/>
     </StyledSignupContainer>
     </>
   )

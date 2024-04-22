@@ -1,5 +1,6 @@
-import { StyledMenuToggle, MainHeader, StyledMainContainer, StyledWrapper } from "./myPalette"
-import { SignupFooter } from "./loginPage"
+import { MainHeader } from "../components/mainHeader"
+import { Footer } from "../components/footer";
+import { StyledMainContainer, StyledWrapper } from "./myPalette"
 import { Snowfall } from "../assets/snowfall"
 import { Honey } from "../assets/honey"
 import { Autumn } from "../assets/autumn"
@@ -31,9 +32,7 @@ export default function GalleryPage(){
 
   return(
     <>
-    <StyledMenuToggle>
-      <MainHeader/>
-    </StyledMenuToggle>
+    <MainHeader/>
      <StyledMainContainer>
       <StyledWrapper>
         <h3># TENENBIYORI</h3>
@@ -57,7 +56,7 @@ export default function GalleryPage(){
         </div>
       </StyledWrapper>
      </StyledMainContainer>
-    <SignupFooter bg="main-footer-bg" font="main-footer"/>
+    <Footer bg="main-footer-bg" font="main-footer"/>
     </>
   )
 }

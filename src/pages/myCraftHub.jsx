@@ -1,5 +1,6 @@
-import { StyledMenuToggle, MainHeader, StyledMainContainer, StyledWrapper, PaletteContainer, PaletteBtn} from "./myPalette"
-import { SignupFooter } from "./loginPage"
+import { MainHeader } from "../components/mainHeader"
+import { Footer } from "../components/footer";
+import { StyledMainContainer, StyledWrapper, PaletteContainer, PaletteBtn} from "./myPalette"
 import { AddSelectionToMine, RemoveMyCollection, GetMyCollection, GetMyFavBrands, GetMyPaletteColor } from "../api/GetBrandPaletteData"
 import { Snowfall } from "../assets/snowfall"
 import { Honey } from "../assets/honey"
@@ -231,9 +232,7 @@ export default function CraftHubPage(){
 
   return(
     <>
-    <StyledMenuToggle>
-      <MainHeader/>
-    </StyledMenuToggle>
+    <MainHeader/>
 
     <StyledMainContainer>
       <SelectionContext.Provider value={{ selectedColor, setSelectedColor, colorSelection, setColorSelection, delVersion }}>
@@ -262,7 +261,7 @@ export default function CraftHubPage(){
       </StyledWrapper>
       </SelectionContext.Provider>
     </StyledMainContainer>
-    <SignupFooter bg="main-footer-bg" font="main-footer"/>
+    <Footer bg="main-footer-bg" font="main-footer"/>
     </>
   )
 }

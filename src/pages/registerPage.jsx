@@ -1,4 +1,5 @@
-import { SignupFooter, RegisterInput, RegisterButton, SignupMainContainer, StyledSignupContainer } from "./loginPage"
+import { Footer } from "../components/footer";
+import { RegisterInput, RegisterButton, SignupMainContainer, StyledSignupContainer } from "./loginPage"
 import { register } from "../api/authToken"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
@@ -106,7 +107,7 @@ export default function RegisterPage(){
       <SignupMainContainer route="/login" icon="fa-solid fa-rotate-left">
         <RegisterInputItem onChange={onChange} handleClick={handleClick}/>
       </SignupMainContainer>
-      <SignupFooter bg="signup-footer-bg" font="signup-footer"/>
+      <Footer bg="signup-footer-bg" font="signup-footer"/>
     </StyledSignupContainer>
     </>
   )
