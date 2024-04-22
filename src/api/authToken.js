@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const authURL = "http://34.125.232.84:8080"
+const authURL = "http://54.250.240.16:8080"
 
 export const register = async({name, email, password, checkpassword}) => {
   try { 
