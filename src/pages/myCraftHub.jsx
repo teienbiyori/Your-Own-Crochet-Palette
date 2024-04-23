@@ -4,6 +4,8 @@ import { StyledMainContainer, StyledWrapper, PaletteContainer, PaletteBtn} from 
 import { AddSelectionToMine, RemoveMyCollection, GetMyCollection, GetMyFavBrands, GetMyPaletteColor } from "../api/GetBrandPaletteData"
 import { Snowfall } from "../assets/snowfall"
 import { Honey } from "../assets/honey"
+import { Rainbow } from "../assets/rainbow"
+import { Granny } from "../assets/granny"
 import { Autumn } from "../assets/autumn"
 import styled from "styled-components"
 import { useLocation } from "react-router-dom"
@@ -102,12 +104,16 @@ export function RenderChosenPalette({array}){
 function CraftHubContainer({colorArray}){
   const SnowfallPattern = ({path, first, second, third, fourth})=>(<Snowfall path={path} first={first} second={second} third={third} fourth={fourth}/>)
   const HoneyPattern = ({path, first, second, third, fourth})=>(<Honey path={path} first={first} second={second} third={third} fourth={fourth}/>)
+  const GrannyPattern = ({path, first, second, third, fourth})=>(<Granny path={path} first={first} second={second} third={third} fourth={fourth}/>)
+  const RainbowPattern = ({path, first, second, third, fourth})=>(<Rainbow path={path} first={first} second={second} third={third} fourth={fourth}/>)
   const AutumnPattern = ({path, first, second, third, fourth})=>(<Autumn path={path} first={first} second={second} third={third} fourth={fourth}/>)
 
-  const patternSlide = [ <SnowfallPattern key="snowfallPattern" path="path" first="#614d3b" second="#24201e" third="#cac8c6" fourth="#9f9089"/>, <HoneyPattern key="honeyPattern" path="path" first="#614d3b" second="#24201e" third="#cac8c6" fourth="#9f9089"/>, <AutumnPattern key="autumnPattern" path="path" first="#614d3b" second="#24201e" third="#cac8c6" fourth="#9f9089"/> ];
+  const patternSlide = [ <SnowfallPattern key="snowfallPattern" path="path" first="#614d3b" second="#24201e" third="#cac8c6" fourth="#9f9089"/>, <HoneyPattern key="honeyPattern" path="path" first="#614d3b" second="#24201e" third="#cac8c6" fourth="#9f9089"/>, <GrannyPattern key="autumnPattern" path="path" first="#614d3b" second="#24201e" third="#cac8c6" fourth="#9f9089"/>,
+  <RainbowPattern key="grannyPattern" path="path" first="#614d3b" second="#24201e" third="#cac8c6" fourth="#9f9089"/>, <AutumnPattern key="grannyPattern" path="path" first="#614d3b" second="#24201e" third="#cac8c6" fourth="#9f9089"/> ];
  
   useEffect(()=>{
-     const editSlide = [ <SnowfallPattern key="snowfallPattern" path="path-lg" first={colorArray[0]} second={colorArray[1]} third={colorArray[2]} fourth={colorArray[3]}/>, <HoneyPattern key="honeyPattern" path="path-lg" first={colorArray[0]} second={colorArray[1]} third={colorArray[2]} fourth={colorArray[3]}/>, <AutumnPattern key="autumnPattern" path="path-lg" first={colorArray[0]} second={colorArray[1]} third={colorArray[2]} fourth={colorArray[3]}/> ];
+     const editSlide = [ <SnowfallPattern key="snowfallPattern" path="path-lg" first={colorArray[0]} second={colorArray[1]} third={colorArray[2]} fourth={colorArray[3]}/>, <HoneyPattern key="honeyPattern" path="path-lg" first={colorArray[0]} second={colorArray[1]} third={colorArray[2]} fourth={colorArray[3]}/>, <GrannyPattern key="autumnPattern" path="path-lg" first={colorArray[0]} second={colorArray[1]} third={colorArray[2]} fourth={colorArray[3]}/>, <RainbowPattern key="grannyPattern" path="path-lg" first={colorArray[0]} second={colorArray[1]} third={colorArray[2]} fourth={colorArray[3]}/>,
+     <AutumnPattern key="grannyPattern" path="path-lg" first={colorArray[0]} second={colorArray[1]} third={colorArray[2]} fourth={colorArray[3]}/>  ];
      setEdit(editSlide)
   }, [colorArray])
   
