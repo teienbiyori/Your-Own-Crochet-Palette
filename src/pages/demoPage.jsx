@@ -2,6 +2,7 @@ import PrimaryColors from "../components/primaryColors";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import "../styles/animation.scss"
 import "../styles/userPage.scss"
 
 const StyledMenuContainer = styled.div`

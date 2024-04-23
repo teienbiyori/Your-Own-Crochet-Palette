@@ -16,10 +16,12 @@ function App() {
        <Route path="*" element={<DemoPage />}></Route>
        <Route path="login" element={<LoginPage />}></Route>
        <Route path="register" element={<RegisterPage />}></Route>
-       <Route path="user" element={<UserPage />}></Route>
-       <Route path="palette" element={<PalettePage />}></Route>
-       <Route path="crafthub" element={<CraftHubPage />}></Route>
-       <Route path="gallery" element={<GalleryPage />}></Route>  
+       <Route path="/user">
+        <Route index element={<UserPage/>}/>
+        <Route path="palette" element={<PalettePage />}></Route>
+        <Route path="crafthub" element={<CraftHubPage />}></Route>
+        <Route path="gallery" element={<GalleryPage />}></Route>  
+       </Route>
       </Routes>
     </BrowserRouter>
     </>

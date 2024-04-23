@@ -1,65 +1,25 @@
 import { MainHeader } from "../components/mainHeader"
 import { Footer } from "../components/footer";
-import { StyledMainContainer, StyledWrapper, PaletteContainer, PaletteBtn} from "./myPalette"
+import { MainContainer, MainWrapper } from "../components/wrapper";
+import { PaletteBtn, PaletteContainer } from "../components/paletteComponent";
+import { ColorSquare, SelectorSquare, PaletteSquare } from "../components/colorSquare";
 import { AddSelectionToMine, RemoveMyCollection, GetMyCollection, GetMyFavBrands, GetMyPaletteColor } from "../api/GetBrandPaletteData"
 import { Snowfall } from "../assets/snowfall"
 import { Honey } from "../assets/honey"
 import { Rainbow } from "../assets/rainbow"
 import { Granny } from "../assets/granny"
 import { Autumn } from "../assets/autumn"
-import styled from "styled-components"
 import { useLocation } from "react-router-dom"
 import { useState, createContext, useEffect } from "react"
 import { useContext } from "react"
 
 const myToken = localStorage.getItem("token")
 
-//squares inside my collection
-const StyledPaletteSquare =styled.div`
-  height: 1rem;
-  width: 1rem;
-  border-radius: 0.2rem;
-  outline: 0.1rem solid rgba(36, 32, 30, 0.3);
-  background-color:${props => props?.hexcode || "rgba(36, 32, 30, 0.2)"};
-`
-//Selectable squares in the crafthub page
-const StyledColorSquare =styled.div`
-  height: 1.5rem;
-  width: 1.1rem;
-  border-radius: 0.2rem;
-  outline: 0.1rem solid rgba(36, 32, 30, 0.3);
-  background-color:${props => props?.hexcode || "transparent"};
-  ${props => props?.page &&`
-    cursor: pointer;
-    &:hover {
-    outline: 0.1rem solid rgba(36, 32, 30, 0.6);
-    }
-    &:active {
-    transform: translateY(-0.2rem);
-    }
-    `
-  }
-`
-
-//squares inside selector
-const SelectedColor = styled.div`
-  width: 2rem;
-  height: 2rem;
-  margin-right: 0.5rem;
-  border-radius: 0.3rem;
-  background-color: ${props => props.color || "rgba(36, 32, 30, 0.2)"};
-  &:hover {
-    outline: 2px solid rgba(36, 32, 30, 0.3);
-  }
-`
-export {
-  StyledColorSquare as StyledColorSquare,
-}
 
 export function RenderColors({brand}){
     // only CraftHubPage has pickable styles
     const location = useLocation();
-    const isCraftHub = location.pathname === "/crafthub";
+    const isCraftHub = location.pathname === "/user/crafthub";
 
     //add color to selector
     const {setSelectedColor, setColorSelection} = useContext(SelectionContext);
@@ -73,7 +33,7 @@ export function RenderColors({brand}){
   }
     const brandPalette = brand.paletteIds;
     return(<>
-      {brandPalette?.map((color)=>(<StyledColorSquare id={color.hexCode} key={color.paletteId} hexcode={color.hexCode} page={isCraftHub} onClick={handleGetHex}/>))}
+      {brandPalette?.map((color)=>(<ColorSquare id={color.hexCode} key={color.paletteId} hexcode={color.hexCode} page={isCraftHub} onClick={handleGetHex}/>))}
     </>)
 }
 
@@ -88,16 +48,15 @@ function RenderChosenColors({array}){
       const updateSelection = [...prevSelection.slice(1), newColor];
       return updateSelection;
     })
-
   }
     return(<>
-      {array?.map((color)=>(<StyledColorSquare id={color.hexCode} key={color._id} hexcode={color.hexCode} page={isCraftHub} onClick={handleGetHex}/>))}
+      {array?.map((color)=>(<ColorSquare id={color.hexCode} key={color._id} hexcode={color.hexCode} page={isCraftHub} onClick={handleGetHex}/>))}
     </>)
 }
 
 export function RenderChosenPalette({array}){
     return(<>
-      {array?.map((color)=>(<StyledPaletteSquare id={color} key={color} hexcode={color}/>))}
+      {array?.map((color)=>(<PaletteSquare id={color} key={color} hexcode={color}/>))}
     </>)
 }
 
@@ -108,8 +67,8 @@ function CraftHubContainer({colorArray}){
   const RainbowPattern = ({path, first, second, third, fourth})=>(<Rainbow path={path} first={first} second={second} third={third} fourth={fourth}/>)
   const AutumnPattern = ({path, first, second, third, fourth})=>(<Autumn path={path} first={first} second={second} third={third} fourth={fourth}/>)
 
-  const patternSlide = [ <SnowfallPattern key="snowfallPattern" path="path" first="#614d3b" second="#24201e" third="#cac8c6" fourth="#9f9089"/>, <HoneyPattern key="honeyPattern" path="path" first="#614d3b" second="#24201e" third="#cac8c6" fourth="#9f9089"/>, <GrannyPattern key="autumnPattern" path="path" first="#614d3b" second="#24201e" third="#cac8c6" fourth="#9f9089"/>,
-  <RainbowPattern key="grannyPattern" path="path" first="#614d3b" second="#24201e" third="#cac8c6" fourth="#9f9089"/>, <AutumnPattern key="grannyPattern" path="path" first="#614d3b" second="#24201e" third="#cac8c6" fourth="#9f9089"/> ];
+  const patternSlide = [ <SnowfallPattern key="snowfallPattern" path="path" first="#614d3b" second="#24201e" third="#cac8c6" fourth="#9f9089"/>, <HoneyPattern key="honeyPattern" path="path" first="#614d3b" second="#24201e" third="#cac8c6" fourth="#9f9089"/>, <GrannyPattern key="grannyPattern" path="path" first="#614d3b" second="#24201e" third="#cac8c6" fourth="#9f9089"/>,
+  <RainbowPattern key="rainbowPattern" path="path" first="#614d3b" second="#24201e" third="#cac8c6" fourth="#9f9089"/>, <AutumnPattern key="autumnPattern" path="path" first="#614d3b" second="#24201e" third="#cac8c6" fourth="#9f9089"/> ];
  
   useEffect(()=>{
      const editSlide = [ <SnowfallPattern key="snowfallPattern" path="path-lg" first={colorArray[0]} second={colorArray[1]} third={colorArray[2]} fourth={colorArray[3]}/>, <HoneyPattern key="honeyPattern" path="path-lg" first={colorArray[0]} second={colorArray[1]} third={colorArray[2]} fourth={colorArray[3]}/>, <GrannyPattern key="autumnPattern" path="path-lg" first={colorArray[0]} second={colorArray[1]} third={colorArray[2]} fourth={colorArray[3]}/>, <RainbowPattern key="grannyPattern" path="path-lg" first={colorArray[0]} second={colorArray[1]} third={colorArray[2]} fourth={colorArray[3]}/>,
@@ -171,7 +130,7 @@ function PaletteCollection({array, collectionId}){
     setDelId(collectionId)
   }
  const {error} = RemoveMyCollection(myToken, delId);
-console.log(error)
+
   return(<>
   <div className="path-palette" onClick={delVersion? handleRemoveCollection: handleCollectionClicked }>
     <RenderChosenPalette array={array}/>
@@ -210,7 +169,7 @@ function PaletteSelector(){
   return(<>
   <div className="selection-area">
     <div className="selected">
-      {colorSelection.map((color, index)=>(<SelectedColor key={`${color}-${index}`} color={color}/>))}
+      {colorSelection.map((color, index)=>(<SelectorSquare key={`${color}-${index}`} color={color}/>))}
     </div>
     <div className="edit-icon">
       <button onClick={handleShuffle}><i className="fa-solid fa-shuffle"></i></button>
@@ -239,10 +198,9 @@ export default function CraftHubPage(){
   return(
     <>
     <MainHeader/>
-
-    <StyledMainContainer>
+    <MainContainer>
       <SelectionContext.Provider value={{ selectedColor, setSelectedColor, colorSelection, setColorSelection, delVersion }}>
-      <StyledWrapper>
+      <MainWrapper>
         <CraftHubContainer colorArray={colorSelection}/>
         <PaletteContainer
         paletteName={delVersion? "Remove Mode":"My Collection"}
@@ -251,9 +209,9 @@ export default function CraftHubPage(){
       <PaletteBtn btnId="tag-close" btnClass="fa-regular fa-trash-can" onClick={()=>{setDelVersion(!delVersion)}}/>
       <PaletteBtn btnId="tag-delete" btnClass="fa-solid fa-minus" />
         </PaletteContainer>
-      </StyledWrapper>
+      </MainWrapper>
 
-      <StyledWrapper>
+      <MainWrapper>
         <PaletteSelector/>
         <PaletteContainer paletteName="My Palette" colorContainer="color-container" colors={<RenderChosenColors array={favColors}/>}>
           <PaletteBtn btnId="tag-close" btnClass="fa-solid fa-minus" />
@@ -264,9 +222,9 @@ export default function CraftHubPage(){
       <PaletteBtn btnId="tag-close" btnClass="fa-solid fa-minus"/>
       </PaletteContainer>
     ))} 
-      </StyledWrapper>
+      </MainWrapper>
       </SelectionContext.Provider>
-    </StyledMainContainer>
+    </MainContainer>
     <Footer bg="main-footer-bg" font="main-footer"/>
     </>
   )

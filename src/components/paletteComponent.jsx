@@ -37,7 +37,32 @@ const StyledMainPalette = styled.div`
     }
   }
 `
-
 export {
   StyledMainPalette as StyledMainPalette,
+}
+
+//tag btn on paletteContainer
+export function PaletteBtn({ btnId, btnClass, onClick}){
+  return(<>
+    <button onClick={onClick}><i id={btnId} className={btnClass}></i></button>
+  </>)
+}
+
+export function PaletteContainer({ picker, children, paletteName, colorContainer,colors}){
+  return(
+  <>
+    <StyledMainPalette>
+      <div className="btn-container">
+        {children}
+      </div>
+      <div className="name-container">
+        <h3 className="palette-name">{paletteName}</h3>
+      </div>
+        {picker}
+      <div className={colorContainer}>
+        {colors}
+      </div>
+    </StyledMainPalette>
+  </>
+  ) 
 }

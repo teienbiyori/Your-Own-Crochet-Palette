@@ -1,6 +1,6 @@
 import { MainHeader } from "../components/mainHeader"
 import { Footer } from "../components/footer";
-import { StyledMainContainer, StyledWrapper } from "./myPalette"
+import { MainContainer, MainWrapper } from "../components/wrapper";
 import { Snowfall } from "../assets/snowfall"
 import { Honey } from "../assets/honey"
 import { Autumn } from "../assets/autumn"
@@ -33,12 +33,12 @@ export default function GalleryPage(){
   return(
     <>
     <MainHeader/>
-     <StyledMainContainer>
-      <StyledWrapper>
+     <MainContainer>
+      <MainWrapper>
         <h3># TENENBIYORI</h3>
         feel free
-      </StyledWrapper>
-      <StyledWrapper>
+      </MainWrapper>
+      <MainWrapper>
         <h3># My Gallery</h3>
         <div className="pattern-gallery">
           {collections?.map((collection)=>(
@@ -54,8 +54,8 @@ export default function GalleryPage(){
           palette={<RenderChosenPalette array={collection.colorSchema}/>}>
             <Autumn key={collection._id + ":autumn"} path="pattern" first={collection.colorSchema[0]} second={collection.colorSchema[1]} third={collection.colorSchema[2]} fourth={collection.colorSchema[3]}/></EachPattern>))}
         </div>
-      </StyledWrapper>
-     </StyledMainContainer>
+      </MainWrapper>
+     </MainContainer>
     <Footer bg="main-footer-bg" font="main-footer"/>
     </>
   )

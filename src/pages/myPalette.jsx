@@ -1,82 +1,14 @@
+import { MainHeader } from "../components/mainHeader";
 import { Footer } from "../components/footer";
+import { MainContainer, MainWrapper } from "../components/wrapper";
+import { PaletteBtn, PaletteContainer } from "../components/paletteComponent";
+import { ColorSquare } from "../components/colorSquare";
 import { GetBrandPaletteData, GetMyFavBrands, AddBrandToMine, RemoveBrandFromMine, GetMyPaletteColor, useAddColorToMine, useRemoveColorFromMine } from "../api/GetBrandPaletteData"
-import { MainHeader } from "../components/mainHeader"
-import { StyledColorSquare } from "./myCraftHub"
-import styled from "styled-components"
 import { useState } from "react"
 import { ChromePicker } from "react-color"
 
-
 const baseURL = "http://54.250.240.16:8080";
 
-const StyledMainContainer  = styled.div`
-  padding: 5rem 1rem 1rem;
-  height: 100%;
-  width: 100%;
-  display: grid;
-  justify-content: center;
-  grid-template-columns: minmax(300px, 400px) minmax(300px, 1fr);
-  grid-auto-rows: auto;
-  gap: 1rem;
-  @media (max-width: 500px) {
-    grid-template-columns: minmax(300px, 400px);
-}
-`
-const StyledWrapper = styled.div`
-  border: 2px solid #cac8c6;
-  overflow-y: scroll;
-  padding: 1rem;
-  h3 {
-    color: #24201e;
-  }
-`
-const StyledMainPalette = styled.div`
-  position: relative;
-  margin: 1rem 0 0rem;
-  background-color: rgba(255, 255, 255, 0.5);
-
-  .name-container {
-    background-color: #9f9089;
-    padding: 0.5rem 1rem;
-    border-radius: 0 1rem 1rem 0;
-    width: fit-content; 
-    transform: translateY(0.2rem) translateX(-0.5rem);
-    .palette-name {
-      font-size: 0.8rem;
-      color: #ece7e0;
-    }
-  }
-  .btn-container {
-    position: absolute;
-    top: -5px;
-    right: 10px;
-    button {
-      width: 1.5rem;
-      height: 1.5rem;
-      background-color: #9f9089;
-      border-radius: 0 0 0.5rem 0.5rem;
-      padding: 0.2rem;
-      margin: 0 0.3rem;
-      color: #ece7e0;
-      &:hover {
-        background-color: rgba(159, 144, 137, 0.8);
-      }
-      &:active {
-        transform: translateY(0.2rem);
-      }
-    }
-  }
-`
-export {
-  StyledMainContainer as StyledMainContainer,
-  StyledWrapper as StyledWrapper,
-}
-
-export function PaletteBtn({ btnId, btnClass, onClick}){
-  return(<>
-    <button onClick={onClick}><i id={btnId} className={btnClass}></i></button>
-  </>)
-}
 
 function ColorPicker(props){
 const [pickedColor, setPickedColor] = useState("")
@@ -100,32 +32,13 @@ const handleAddHex = ()=>{
   </>)
 }
 
-export function PaletteContainer({ picker, children, paletteName, colorContainer,colors}){
-  return(
-  <>
-    <StyledMainPalette>
-      <div className="btn-container">
-        {children}
-      </div>
-      <div className="name-container">
-        <h3 className="palette-name">{paletteName}</h3>
-      </div>
-        {picker}
-      <div className={colorContainer}>
-        {colors}
-      </div>
-    </StyledMainPalette>
-  </>
-  ) 
-}
-
 function ShowcaseColors({brand}){
     const handleGetHex = (e) =>{
     console.log(e.target.id)
   }
     const brandPalette = brand.paletteIds;
     return(<>
-      {brandPalette?.map((color)=>(<StyledColorSquare id={color.hexCode} key={color.paletteId} hexcode={color.hexCode} onClick={handleGetHex}/>))}
+      {brandPalette?.map((color)=>(<ColorSquare id={color.hexCode} key={color.paletteId} hexcode={color.hexCode} onClick={handleGetHex}/>))}
     </>)
 }
 
@@ -143,7 +56,7 @@ function ShowcaseChosenColors({array, onKidsData}){
   }
     return(<>
       <button className="delete-color" onClick={handleDelHex}><i className="fa-regular fa-trash-can"></i></button>
-      {array?.map((color)=>(<StyledColorSquare id={color._id} key={color._id} hexcode={color.hexCode} onClick={handleGetHex}/>))}
+      {array?.map((color)=>(<ColorSquare id={color._id} key={color._id} hexcode={color.hexCode} onClick={handleGetHex}/>))}
     </>)
 }
 
@@ -203,8 +116,8 @@ export default function PalettePage(){
   return(
     <>
     <MainHeader />
-    <StyledMainContainer>
-      <StyledWrapper>
+    <MainContainer>
+      <MainWrapper>
         <h3># My Palette</h3>
     <PaletteContainer 
     picker={<ColorPicker  onChildData={handleAddToMine}/>} colorContainer="color-container" colors={showPalette? <ShowcaseChosenColors onKidsData={handleRemoveFromMine} array={favColors}/>: ""} paletteName="Create your Own">
@@ -218,16 +131,16 @@ export default function PalettePage(){
       <PaletteBtn btnId="tag-close" btnClass="fa-solid fa-minus" onClick={handleShowPalette}/>
       </PaletteContainer>
     ))}
-      </StyledWrapper>
+      </MainWrapper>
       
-      <StyledWrapper>
+      <MainWrapper>
     <h3># Brand Palette</h3>
     {brands?.map((brand)=>(<PaletteContainer key={brand.name} paletteName={brand.name} colorContainer="color-container" colors={<ShowcaseColors brand={brand}/>}> 
       <PaletteBtn btnId={brand._id} btnClass="fa-solid fa-heart" onClick={handleAddPalette}/>
       <PaletteBtn btnId="tag-close" btnClass="fa-solid fa-minus" onClick={handleShowPalette}/>
     </PaletteContainer>))}
-</StyledWrapper>
-</StyledMainContainer>
+</MainWrapper>
+</MainContainer>
 <Footer bg="main-footer-bg" font="main-footer"/>
     </>
   )
