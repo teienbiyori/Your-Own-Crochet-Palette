@@ -113,7 +113,7 @@ function CraftHubContainer({colorArray}){
     </button>
   </div>
   <div className="path-area">
-    {edit?.[1]}
+    {edit?.[2]}
   </div>
   </div>
   </>)
