@@ -13,8 +13,6 @@ import { useLocation } from "react-router-dom"
 import { useState, createContext, useEffect } from "react"
 import { useContext } from "react"
 
-const myToken = localStorage.getItem("token")
-
 
 export function RenderColors({brand}){
     // only CraftHubPage has pickable styles
@@ -129,7 +127,7 @@ function PaletteCollection({array, collectionId}){
   const handleRemoveCollection = ()=>{
     setDelId(collectionId)
   }
- const {error} = RemoveMyCollection(myToken, delId);
+ RemoveMyCollection(delId);
 
   return(<>
   <div className="path-palette" onClick={delVersion? handleRemoveCollection: handleCollectionClicked }>
@@ -161,7 +159,7 @@ function PaletteSelector(){
     const jsonParseSelection = JSON.parse(jsonSelection)
     setColorArray(jsonParseSelection)
   }
-  AddSelectionToMine(myToken, colorArray)
+  AddSelectionToMine(colorArray)
 
   //aviod 
   useEffect(()=>{},[colorSelection])
@@ -184,9 +182,9 @@ function PaletteSelector(){
 const SelectionContext = createContext();
 
 export default function CraftHubPage(){
-  const { favBrands } = GetMyFavBrands(myToken);
-  const { favColors } = GetMyPaletteColor(myToken);
-  const { collections } = GetMyCollection(myToken);
+  const { favBrands } = GetMyFavBrands();
+  const { favColors } = GetMyPaletteColor();
+  const { collections } = GetMyCollection();
 
   //color selected from palette
   const [selectedColor, setSelectedColor] =useState("");

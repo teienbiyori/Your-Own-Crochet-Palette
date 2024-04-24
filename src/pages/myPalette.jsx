@@ -7,9 +7,6 @@ import { GetBrandPaletteData, GetMyFavBrands, AddBrandToMine, RemoveBrandFromMin
 import { useState } from "react"
 import { ChromePicker } from "react-color"
 
-const baseURL = "http://54.250.240.16:8080";
-
-
 function ColorPicker(props){
 const [pickedColor, setPickedColor] = useState("")
 const handleGetHex = (e) =>{
@@ -62,15 +59,14 @@ function ShowcaseChosenColors({array, onKidsData}){
 
 
 export default function PalettePage(){
-  const myToken = localStorage.getItem("token")
-  const { data } = GetBrandPaletteData(`${baseURL}/brands`);
+  const { data } = GetBrandPaletteData();
   const brands = data;
-  const { favBrands } = GetMyFavBrands(myToken);
+  const { favBrands } = GetMyFavBrands();
   // const [myFavBrands, setMyFavBrands] = useState([]);
   const [brandID, setBrandID] = useState("");
   const [delBrandID, setDelBrandID] = useState("");
-  AddBrandToMine(myToken, brandID);
-  RemoveBrandFromMine(myToken, delBrandID)
+  AddBrandToMine(brandID);
+  RemoveBrandFromMine(delBrandID)
   // setMyFavBrands(favBrands);
  
   const handleAddPalette = (e)=>{
@@ -87,7 +83,7 @@ export default function PalettePage(){
   }
 
   //alert is working, but favColors is not realtime
-  const { favColors } = GetMyPaletteColor(myToken);
+  const { favColors } = GetMyPaletteColor();
   const allColors = favColors?.map((color)=>(color.hexCode))
   const [chosenColor, setChosenColor] = useState("");
   const handleAddToMine = (pickedColor) =>{ 
@@ -98,14 +94,13 @@ export default function PalettePage(){
       setChosenColor(pickedColor);
     }
   }
-  useAddColorToMine(myToken, chosenColor)
+  useAddColorToMine(chosenColor)
 
   const [chosenDelColor, setChosenDelColor] = useState("");
   const handleRemoveFromMine = (picked) => {
     setChosenDelColor(picked)
   }
-  console.log(chosenDelColor)
-  useRemoveColorFromMine(myToken, chosenDelColor)
+  useRemoveColorFromMine(chosenDelColor)
 
   //minimize palette
   const [showPalette, setShowPalette] = useState(true);

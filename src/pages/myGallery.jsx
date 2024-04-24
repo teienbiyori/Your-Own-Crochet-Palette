@@ -30,8 +30,6 @@ function EachPattern({children, palette}){
 
 export default function GalleryPage(){
   const { collections } = GetMyCollection(myToken)
-  console.log(collections?.[0].colorSchema)
-
   return(
     <>
     <MainHeader/>

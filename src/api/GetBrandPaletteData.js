@@ -2,78 +2,95 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 const authURL = "http://54.250.240.16:8080"
 
+const axiosInstance = axios.create({
+  authURL:"http://54.250.240.16:8080",
+  });
+
+axiosInstance.interceptors.request.use(
+    (config)=>{
+      const token = localStorage.getItem("token");
+      if(token){
+        config.headers["Authorization"] = `Bearer ${token}`
+      }
+      return config;
+    },
+    (error)=>{
+      console.log(error)
+    }
+);
+
 //token free /brands
-export function GetBrandPaletteData(url){
+export function GetBrandPaletteData(){
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
     useEffect(()=>{
-    axios.get(url).then((response)=>{
+    axios.get(`${authURL}/brands`).then((response)=>{
       setData(response.data)
     })
     .catch((error)=>{
       setError(error)
     })
-    },[url])
+    },[])
   return {data, error};
 }
 
 ///user/brands
-export function AddBrandToMine(myToken, brandID){
+export function AddBrandToMine(brandID){
   const [actionId, setActionId] = useState(null);
   const [error, setError] = useState(null);
   useEffect(()=>{
     if(brandID.length===0){
       return;
     }
-    axios.post(`${authURL}/user/brands`, {brandId:brandID}, {headers:{Authorization:"Bearer "+myToken}})
+    axiosInstance.post(`${authURL}/user/brands`,{brandId:brandID})
     .then((response)=>{
       setActionId(response.data._id);
     })
     .catch((e)=>{
-      setError(e);
+      setError(e.response.data.message);
     })
-  },[myToken,brandID])
+  },[brandID])
   return {actionId, error}
 }
-export function RemoveBrandFromMine(myToken, actionID){
+export function RemoveBrandFromMine(actionID){
   const [delData, setDelData] = useState(null);
   const [error, setError] = useState(null);
   useEffect(()=>{
     if(actionID.length===0){
       return;
     }
-    axios.delete(`${authURL}/user/brand/${actionID}`, {headers:{Authorization:"Bearer "+myToken}})
+    axiosInstance.delete(`${authURL}/user/brand/${actionID}`)
     .then((response)=>{
       setDelData(response.data);
     })
     .catch((e)=>{
       setError(e);
     })
-  },[myToken,actionID])
+  },[actionID])
   return {delData, error}
 }
-export function GetMyFavBrands(myToken){
+export function GetMyFavBrands(){
   const [favBrands, setFavBrands] = useState(null);
   const [error, setError] = useState(null);
   useEffect(()=>{
-    axios.get(`${authURL}/user/brands`, {headers:{Authorization:"Bearer "+myToken}})
+    axiosInstance.get(`${authURL}/user/brands`)
     .then((response)=>{
       setFavBrands(response.data);
     })
     .catch((e)=>{
       setError("[Failed getting favBrands]:",e);
     })
-  },[myToken])
+  },[])
   return {favBrands, error}
 }
 
 ///user/palettes
-export function useAddColorToMine(myToken, hexCode){
+export function useAddColorToMine(hexCode){
   const [hexcodeId, setHexcodeId] = useState(null);
   const [error, setError] = useState(null);
   useEffect(()=>{
     if(hexCode && hexCode.length>0){
-    axios.post(`${authURL}/user/palettes`, {hexCode:hexCode, paletteName:"myPalette"}, {headers:{Authorization:"Bearer "+myToken}})
+    axiosInstance.post(`${authURL}/user/palettes`, {hexCode:hexCode, paletteName:"myPalette"})
     .then((response)=>{
       setHexcodeId(response.data._id);
     })
@@ -81,83 +98,83 @@ export function useAddColorToMine(myToken, hexCode){
       setError(e);
     })
     }
-  },[myToken,hexCode])
+  },[hexCode])
   return {hexcodeId, error}
 }
 
-export function useRemoveColorFromMine(myToken, actionID){
+export function useRemoveColorFromMine(actionID){
   const [delData, setDelData] = useState(null);
   const [error, setError] = useState(null);
   useEffect(()=>{
     if(actionID.length===0){
       return;
     }
-    axios.delete(`${authURL}/user/palette/${actionID}`, {headers:{Authorization:"Bearer "+myToken}})
+    axiosInstance.delete(`${authURL}/user/palette/${actionID}`)
     .then((response)=>{
       setDelData(response.data);
     })
     .catch((e)=>{
       setError(e);
     })
-  },[myToken,actionID])
+  },[actionID])
   return {delData, error}
 }
 
-export function GetMyPaletteColor(myToken){
+export function GetMyPaletteColor(){
   const [favColors, setFavColors] = useState(null);
   const [error, setError] = useState(null);
   useEffect(()=>{
-    axios.get(`${authURL}/user/palettes`, {headers:{Authorization:"Bearer "+myToken}})
+    axiosInstance.get(`${authURL}/user/palettes`)
     .then((response)=>{
       setFavColors(response.data);
     })
     .catch((e)=>{
       setError("[Failed getting favColors]:",e);
     })
-  },[myToken])
+  },[])
   return {favColors, error}
 }
 
 
-export function GetMyCollection(myToken){
+export function GetMyCollection(){
   const [collections, setCollections] = useState(null);
   const [error, setError] = useState(null);
   useEffect(()=>{
-    axios.get(`${authURL}/user/collections`, {headers:{Authorization:"Bearer "+myToken}})
+    axiosInstance.get(`${authURL}/user/collections`)
     .then((response)=>{
       setCollections(response.data);
     })
     .catch((e)=>{
       setError("[Failed getting favColors]:",e);
     })
-  },[myToken])
+  },[])
   return {collections, error}
 }
 
-export function RemoveMyCollection(myToken, collectionId){
+export function RemoveMyCollection(collectionId){
   const [delId, setDelId] = useState(null);
   const [error, setError] = useState(null);
   useEffect(()=>{
     if(collectionId.length===0){
       return;
     }
-    axios.delete(`${authURL}/user/collection/${collectionId}`, {headers:{Authorization:"Bearer "+myToken}})
+    axiosInstance.delete(`${authURL}/user/collection/${collectionId}`)
     .then((response)=>{
       setDelId(response.data);
     })
     .catch((e)=>{
       setError("[Failed getting favColors]:",e.response);
     })
-  },[myToken, collectionId])
+  },[collectionId])
   return {delId, error}
 }
 
-export function AddSelectionToMine(myToken, colorArray){
+export function AddSelectionToMine(colorArray){
   const [collectionId, setCollectionId] = useState(null);
   const [error, setError] = useState(null);
   useEffect(()=>{
     if(colorArray?.length>0){
-    axios.post(`${authURL}/user/collections`, {colorSchema:colorArray}, {headers:{Authorization:"Bearer "+myToken}})
+    axiosInstance.post(`${authURL}/user/collections`, {colorSchema:colorArray})
     .then((response)=>{
       setCollectionId(response.data);
     })
@@ -165,6 +182,6 @@ export function AddSelectionToMine(myToken, colorArray){
       setError(e.response);
     })
     }
-  },[myToken,colorArray])
+  },[colorArray])
   return {collectionId, error}
 }
