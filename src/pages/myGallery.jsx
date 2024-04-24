@@ -4,6 +4,8 @@ import { MainContainer, MainWrapper } from "../components/wrapper";
 import { Snowfall } from "../assets/snowfall"
 import { Honey } from "../assets/honey"
 import { Autumn } from "../assets/autumn"
+import { Rainbow } from "../assets/rainbow"
+import { Granny } from "../assets/granny";
 import { GetMyCollection } from "../api/GetBrandPaletteData"
 import { RenderChosenPalette } from "../pages/myCraftHub"
 
@@ -53,6 +55,14 @@ export default function GalleryPage(){
           <EachPattern key={collection._id + ":autumnArea"}
           palette={<RenderChosenPalette array={collection.colorSchema}/>}>
             <Autumn key={collection._id + ":autumn"} path="pattern" first={collection.colorSchema[0]} second={collection.colorSchema[1]} third={collection.colorSchema[2]} fourth={collection.colorSchema[3]}/></EachPattern>))}
+          {collections?.map((collection)=>(
+          <EachPattern key={collection._id + ":grannyArea"}
+          palette={<RenderChosenPalette array={collection.colorSchema}/>}>
+            <Granny key={collection._id + ":granny"} path="pattern" first={collection.colorSchema[0]} second={collection.colorSchema[1]} third={collection.colorSchema[2]} fourth={collection.colorSchema[3]}/></EachPattern>))}
+          {collections?.map((collection)=>(
+          <EachPattern key={collection._id + ":rainbowArea"}
+          palette={<RenderChosenPalette array={collection.colorSchema}/>}>
+            <Rainbow key={collection._id + ":rainbow"} path="pattern" first={collection.colorSchema[0]} second={collection.colorSchema[1]} third={collection.colorSchema[2]} fourth={collection.colorSchema[3]}/></EachPattern>))}
         </div>
       </MainWrapper>
      </MainContainer>
