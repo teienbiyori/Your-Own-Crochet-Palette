@@ -176,7 +176,6 @@ export default function LoginPage(){
       alert('Mind quick check on the info? Thanks:)');
       return;
     }
-    console.log(userData);
     const { success, token } = await login({...userData});
     if(success){
       localStorage.setItem("token",token);

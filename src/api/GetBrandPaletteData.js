@@ -34,7 +34,7 @@ export function GetBrandPaletteData(){
   return {data, error};
 }
 
-///user/brands
+///user/brands  
 export function AddBrandToMine(brandID){
   const [actionId, setActionId] = useState(null);
   const [error, setError] = useState(null);
@@ -45,9 +45,11 @@ export function AddBrandToMine(brandID){
     axiosInstance.post(`${authURL}/user/brands`,{brandId:brandID})
     .then((response)=>{
       setActionId(response.data._id);
+      console.log(response.data._id);
     })
     .catch((e)=>{
       setError(e.response.data.message);
+      alert(e.response.data.message)
     })
   },[brandID])
   return {actionId, error}

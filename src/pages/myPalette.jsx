@@ -4,8 +4,9 @@ import { MainContainer, MainWrapper } from "../components/wrapper";
 import { PaletteBtn, PaletteContainer } from "../components/paletteComponent";
 import { ColorSquare } from "../components/colorSquare";
 import { GetBrandPaletteData, GetMyFavBrands, AddBrandToMine, RemoveBrandFromMine, GetMyPaletteColor, useAddColorToMine, useRemoveColorFromMine } from "../api/GetBrandPaletteData"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { ChromePicker } from "react-color"
+// import { useContext, createContext } from "react"
 
 function ColorPicker(props){
 const [pickedColor, setPickedColor] = useState("")
@@ -62,12 +63,10 @@ export default function PalettePage(){
   const { data } = GetBrandPaletteData();
   const brands = data;
   const { favBrands } = GetMyFavBrands();
-  // const [myFavBrands, setMyFavBrands] = useState([]);
   const [brandID, setBrandID] = useState("");
   const [delBrandID, setDelBrandID] = useState("");
-  AddBrandToMine(brandID);
-  RemoveBrandFromMine(delBrandID)
-  // setMyFavBrands(favBrands);
+  const { actionId } = AddBrandToMine(brandID);
+  const { delData } = RemoveBrandFromMine(delBrandID);
  
   const handleAddPalette = (e)=>{
     if(e.target.id.length===0){
