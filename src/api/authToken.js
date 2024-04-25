@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const authURL = "http://54.250.240.16:8080"
+const authURL = "https://ec2-13-231-143-123.ap-northeast-1.compute.amazonaws.com/cp"
 
 export const register = async({name, email, password, checkpassword}) => {
   try { 

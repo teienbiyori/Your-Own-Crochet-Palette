@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-const authURL = "http://54.250.240.16:8080"
+const authURL = "https://ec2-13-231-143-123.ap-northeast-1.compute.amazonaws.com/cp"
 
 const axiosInstance = axios.create({
-  authURL:"http://54.250.240.16:8080",
+  authURL:"https://ec2-13-231-143-123.ap-northeast-1.compute.amazonaws.com/cp",
   });
 
 axiosInstance.interceptors.request.use(

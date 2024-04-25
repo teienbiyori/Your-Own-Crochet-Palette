@@ -17,6 +17,7 @@ const StyledWrapper = styled.div`
   border: 2px solid #cac8c6;
   overflow-y: scroll;
   padding: 1rem;
+  position: relative; //new add for swiper
   h3 {
     color: #24201e;
   }

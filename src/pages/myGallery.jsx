@@ -6,6 +6,7 @@ import { Honey } from "../assets/honey"
 import { Autumn } from "../assets/autumn"
 import { Rainbow } from "../assets/rainbow"
 import { Granny } from "../assets/granny";
+import SlidePhoto from "../components/swiper"; 
 import { GetMyCollection } from "../api/GetBrandPaletteData"
 import { RenderChosenPalette } from "../pages/myCraftHub"
 
@@ -36,7 +37,7 @@ export default function GalleryPage(){
      <MainContainer>
       <MainWrapper>
         <h3># TENENBIYORI</h3>
-        feel free
+        <SlidePhoto/>
       </MainWrapper>
       <MainWrapper>
         <h3># My Gallery</h3>
