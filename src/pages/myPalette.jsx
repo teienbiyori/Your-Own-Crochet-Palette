@@ -115,7 +115,6 @@ export default function PalettePage(){
         <h3># My Palette</h3>
     <PaletteContainer 
     picker={<ColorPicker  onChildData={handleAddToMine}/>} colorContainer="color-container" colors={showPalette? <ShowcaseChosenColors onKidsData={handleRemoveFromMine} array={favColors}/>: ""} paletteName="Create your Own">
-      <PaletteBtn btnId="mode-change" btnClass="fa-solid fa-list" />
       <PaletteBtn btnId="edit-palette" btnClass="fa-solid fa-pen" />
     </PaletteContainer>
     {favBrands?.map((eachData)=>(

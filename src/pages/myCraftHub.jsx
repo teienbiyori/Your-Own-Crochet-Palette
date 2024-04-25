@@ -169,7 +169,7 @@ function PaletteSelector(){
     <div className="selected">
       {colorSelection.map((color, index)=>(<SelectorSquare key={`${color}-${index}`} color={color}/>))}
     </div>
-    <div className="edit-icon">
+    <div>
       <button onClick={handleShuffle}><i className="fa-solid fa-shuffle"></i></button>
       <button onClick={handleAddCollection}><i className="fa-solid fa-download"></i></button>
       <button onClick={handleClear}><i className="fa-regular fa-trash-can"></i></button>

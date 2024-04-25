@@ -12,6 +12,21 @@ import { RenderChosenPalette } from "../pages/myCraftHub"
 
 const myToken = localStorage.getItem("token")
 
+function Intro(){
+  return(<>
+    <div className="intro-container">
+      <div className="link-btn">
+        <div className="link-title">Pinkoi</div>
+        <a href="https://www.pinkoi.com/store/teienbiyori" target="_blank"><button><i className="fa-solid fa-cart-shopping"></i></button></a>
+      </div>
+      <div className="link-btn">
+        <div className="link-title">Github</div>
+        <a href="https://github.com/teienbiyori/Your-Own-Crochet-Palette" target="_blank"><button><i className="fa-brands fa-github"></i></button></a>
+      </div>
+    </div>
+  </>)
+}
+
 function EachPattern({children, palette}){
   return(
     <>
@@ -36,7 +51,8 @@ export default function GalleryPage(){
     <MainHeader/>
      <MainContainer>
       <MainWrapper>
-        <h3># TENENBIYORI</h3>
+        <h3># Explore More</h3>
+        <Intro/>
         <SlidePhoto/>
       </MainWrapper>
       <MainWrapper>
