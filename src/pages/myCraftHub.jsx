@@ -193,6 +193,21 @@ export default function CraftHubPage(){
   "#614d3b", "#24201e", "#cac8c6", "#9f9089"]);
   const [delVersion, setDelVersion] = useState(false);
 
+
+  //minimize palette
+  const [showPalette, setShowPalette] = useState([]);
+  const handleShowPalette = (e) =>{
+    const minmaxPalette = e.target.id;
+      if(minmaxPalette.length === 0){
+        return;
+      }
+      if (showPalette.includes(minmaxPalette)) {
+        setShowPalette((prev) => prev.filter((id) => id !== minmaxPalette));
+      } else {
+        setShowPalette((prev) => [...prev, minmaxPalette]);
+      }
+  }
+
   return(
     <>
     <MainHeader/>
@@ -203,21 +218,20 @@ export default function CraftHubPage(){
         <PaletteContainer
         paletteName={delVersion? "Remove Mode":"My Collection"}
         colorContainer="collection-container" 
-        colors={collections?.map((collection)=>(<PaletteCollection key={collection._id} collectionId={collection._id} array={collection.colorSchema}/>))}>
-      <PaletteBtn btnId="tag-close" btnClass="fa-regular fa-trash-can" onClick={()=>{setDelVersion(!delVersion)}}/>
-      <PaletteBtn btnId="tag-delete" btnClass="fa-solid fa-minus" />
+        colors={showPalette.includes("my-collection-close")? "" : collections?.map((collection)=>(<PaletteCollection key={collection._id} collectionId={collection._id} array={collection.colorSchema}/>))}>
+      <PaletteBtn btnId="tag-delete" btnClass="fa-regular fa-trash-can" onClick={()=>{setDelVersion(!delVersion)}}/>
+      <PaletteBtn btnId="my-collection-close" btnClass="fa-solid fa-minus" onClick={handleShowPalette}/>
         </PaletteContainer>
       </MainWrapper>
 
       <MainWrapper>
         <PaletteSelector/>
-        <PaletteContainer paletteName="My Palette" colorContainer="color-container" colors={<RenderChosenColors array={favColors}/>}>
-          <PaletteBtn btnId="tag-close" btnClass="fa-solid fa-minus" />
+        <PaletteContainer paletteName="My Palette" colorContainer="color-container" colors={showPalette.includes("my-palette-close")? "": <RenderChosenColors array={favColors}/>}>
+          <PaletteBtn btnId="my-palette-close" btnClass="fa-solid fa-minus" onClick={handleShowPalette}/>
         </PaletteContainer>
-        {favBrands?.map((eachData)=>(
-      <PaletteContainer key={eachData._id} paletteName={eachData.brand.name} colorContainer="color-container"
-      colors={<RenderColors brand={eachData.brand}/>}>
-      <PaletteBtn btnId="tag-close" btnClass="fa-solid fa-minus"/>
+        {favBrands?.map((eachData)=> (<PaletteContainer key={eachData._id} paletteName={eachData.brand.name} colorContainer="color-container"
+      colors={showPalette.includes(eachData._id)? "" :<RenderColors brand={eachData.brand}/>}>
+      <PaletteBtn btnId={eachData._id} btnClass="fa-solid fa-minus" onClick={handleShowPalette}/>
       </PaletteContainer>
     ))} 
       </MainWrapper>

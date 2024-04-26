@@ -9,7 +9,7 @@ function MenuLink({route, text, icon, onClick}){
     }
   }
   return(<>
-    <a href={route} onClick={handleClick}>{text}<i className={icon}></i></a>
+    <a href={route} onClick={handleClick} style={{cursor:"pointer"}}>{text}<i className={icon}></i></a>
   </>)
 }
 
