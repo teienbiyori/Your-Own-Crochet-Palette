@@ -181,6 +181,7 @@ export default function LoginPage(){
       localStorage.setItem("token",token);
       Swal.fire({
         icon: "success",
+        iconColor:"#614d3b",
         title: "Let's get started!",
         color: "#24201e",
         background: "#ece7e0",
@@ -192,6 +193,7 @@ export default function LoginPage(){
     }
     Swal.fire({
         icon: "error",
+        iconColor:"#614d3b",
         title: "Login Failed...",
         color: "#24201e",
         background: "#ece7e0",

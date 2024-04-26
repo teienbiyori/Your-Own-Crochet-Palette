@@ -20,14 +20,22 @@ export function Menu(){
   const handleLogout = () =>{
     localStorage.removeItem("token");
     Swal.fire({
-      timer: 1000,
+      timer: 1500,
       title: "See you soon :D",
-      width: 600,
-      padding: "3em",
+      width: 320,
+      padding: "2rem 0.5rem 2rem",
       color: "#24201e",
       background: "#ece7e0",
+      showConfirmButton: false,
+      iconHtml:'<img src="https://i.gifer.com/WG8V.gif">',
+      customClass: {
+      icon: 'icon-no-border'
+      },
+      backdrop:`
+      rgba(97, 77, 59, 0.5)
+      `
     });
-    setTimeout(()=>navigate("/login",2000))
+    setTimeout(()=>navigate("/login",1500))
   }
   return(<>
     <MenuLink route={isUserPage? "user/palette" : "palette"} text="My Palette " icon="fa-solid fa-swatchbook" />

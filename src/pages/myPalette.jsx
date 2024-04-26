@@ -102,11 +102,18 @@ export default function PalettePage(){
   useRemoveColorFromMine(chosenDelColor)
 
   //minimize palette
-  const [showPalette, setShowPalette] = useState(true);
-  const handleShowPalette = () =>{
-    setShowPalette(!showPalette)
+  const [showPalette, setShowPalette] = useState([]);
+  const handleShowPalette = (e) =>{
+    const minmaxPalette = e.target.id;
+      if(minmaxPalette.length === 0){
+        return;
+      }
+      if (showPalette.includes(minmaxPalette)) {
+        setShowPalette((prev) => prev.filter((id) => id !== minmaxPalette));
+      } else {
+        setShowPalette((prev) => [...prev, minmaxPalette]);
+      }
   }
-
   return(
     <>
     <MainHeader />
@@ -114,23 +121,23 @@ export default function PalettePage(){
       <MainWrapper>
         <h3># My Palette</h3>
     <PaletteContainer 
-    picker={<ColorPicker  onChildData={handleAddToMine}/>} colorContainer="color-container" colors={showPalette? <ShowcaseChosenColors onKidsData={handleRemoveFromMine} array={favColors}/>: ""} paletteName="Create your Own">
+    picker={<ColorPicker  onChildData={handleAddToMine}/>} colorContainer="color-container" colors={ <ShowcaseChosenColors onKidsData={handleRemoveFromMine} array={favColors}/>} paletteName="Create your Own">
       <PaletteBtn btnId="edit-palette" btnClass="fa-solid fa-pen" />
     </PaletteContainer>
     {favBrands?.map((eachData)=>(
       <PaletteContainer key={eachData._id} paletteName={eachData.brand.name} colorContainer="color-container"
-      colors={showPalette? <ShowcaseColors brand={eachData.brand}/>: ""}>
-        <PaletteBtn btnId={eachData._id} btnClass="fa-solid fa-xmark" onClick={handleRemovePalette}/>
-      <PaletteBtn btnId="tag-close" btnClass="fa-solid fa-minus" onClick={handleShowPalette}/>
+      colors={showPalette.includes(eachData._id)? "": <ShowcaseColors brand={eachData.brand}/> }>
+      <PaletteBtn btnId={eachData._id} btnClass="fa-solid fa-xmark" onClick={handleRemovePalette}/>
+      <PaletteBtn btnId={eachData._id} btnClass="fa-solid fa-minus" onClick={handleShowPalette}/>
       </PaletteContainer>
     ))}
       </MainWrapper>
       
       <MainWrapper>
     <h3># Brand Palette</h3>
-    {brands?.map((brand)=>(<PaletteContainer key={brand.name} paletteName={brand.name} colorContainer="color-container" colors={<ShowcaseColors brand={brand}/>}> 
+    {brands?.map((brand)=>(<PaletteContainer key={brand.name} paletteName={brand.name} colorContainer="color-container" colors={showPalette.includes(brand._id)? "": <ShowcaseColors brand={brand}/>}> 
       <PaletteBtn btnId={brand._id} btnClass="fa-solid fa-heart" onClick={handleAddPalette}/>
-      <PaletteBtn btnId="tag-close" btnClass="fa-solid fa-minus" onClick={handleShowPalette}/>
+      <PaletteBtn btnId={brand._id} btnClass="fa-solid fa-minus" onClick={handleShowPalette}/>
     </PaletteContainer>))}
 </MainWrapper>
 </MainContainer>
