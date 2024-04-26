@@ -162,7 +162,7 @@ function TagBtn({ purpose, icon }){
 
 
 export default function LoginPage(){
-   const navigate =useNavigate();
+   const navigate = useNavigate();
   const [userData, setUserData] = useState({
     email:"",
     password:"",

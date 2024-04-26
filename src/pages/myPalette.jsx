@@ -65,8 +65,8 @@ export default function PalettePage(){
   const { favBrands } = GetMyFavBrands();
   const [brandID, setBrandID] = useState("");
   const [delBrandID, setDelBrandID] = useState("");
-  const { actionId } = AddBrandToMine(brandID);
-  const { delData } = RemoveBrandFromMine(delBrandID);
+  AddBrandToMine(brandID);
+  RemoveBrandFromMine(delBrandID);
  
   const handleAddPalette = (e)=>{
     if(e.target.id.length===0){
