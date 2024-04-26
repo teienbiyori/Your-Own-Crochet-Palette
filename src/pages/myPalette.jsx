@@ -2,7 +2,7 @@ import { MainHeader } from "../components/mainHeader";
 import { Footer } from "../components/footer";
 import { MainContainer, MainWrapper } from "../components/wrapper";
 import { PaletteBtn, PaletteContainer } from "../components/paletteComponent";
-import { ColorSquare } from "../components/colorSquare";
+import { ColorSquare, MyOwnSquare } from "../components/colorSquare";
 import { GetBrandPaletteData, GetMyFavBrands, AddBrandToMine, RemoveBrandFromMine, GetMyPaletteColor, useAddColorToMine, useRemoveColorFromMine } from "../api/GetBrandPaletteData"
 import { useEffect, useState } from "react"
 import { ChromePicker } from "react-color"
@@ -31,20 +31,18 @@ const handleAddHex = ()=>{
 }
 
 function ShowcaseColors({brand}){
-    const handleGetHex = (e) =>{
-    console.log(e.target.id)
-  }
     const brandPalette = brand.paletteIds;
     return(<>
-      {brandPalette?.map((color)=>(<ColorSquare id={color.hexCode} key={color.paletteId} hexcode={color.hexCode} onClick={handleGetHex}/>))}
+      {brandPalette?.map((color)=>(<ColorSquare id={color.hexCode} key={color.paletteId} hexcode={color.hexCode} />))}
     </>)
 }
 
 function ShowcaseChosenColors({array, onKidsData}){
   const [picked, setPicked] = useState("");
+  const [isActive, setIsActive] = useState("")
   const handleGetHex = (e) =>{
-    console.log(e.target.id)
-    setPicked(e.target.id)
+    setPicked(e.target.id);
+    setIsActive(e.target.id);
   }
   const handleDelHex = ()=>{
     if(picked===""){
@@ -54,7 +52,7 @@ function ShowcaseChosenColors({array, onKidsData}){
   }
     return(<>
       <button className="delete-color" onClick={handleDelHex}><i className="fa-regular fa-trash-can"></i></button>
-      {array?.map((color)=>(<ColorSquare id={color._id} key={color._id} hexcode={color.hexCode} onClick={handleGetHex}/>))}
+      {array?.map((color)=>(<MyOwnSquare id={color._id} key={color._id} hexcode={color.hexCode} onClick={handleGetHex} picked={isActive === color._id}/> ))}
     </>)
 }
 

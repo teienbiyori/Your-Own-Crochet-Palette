@@ -37,7 +37,7 @@ export function RenderColors({brand}){
 
 function RenderChosenColors({array}){
   const location = useLocation();
-  const isCraftHub = location.pathname === "/crafthub";
+  const isCraftHub = location.pathname === "/user/crafthub";
   const {setSelectedColor, setColorSelection} = useContext(SelectionContext);
   const handleGetHex = (e) =>{
     const newColor = e.target.id;
