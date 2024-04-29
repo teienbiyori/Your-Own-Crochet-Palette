@@ -11,10 +11,10 @@ import { HashRouter, BrowserRouter, Routes, Route } from "react-router-dom";
 function App() {
   return (
     <>
-    <HashRouter basename="/Your-Own-Crochet-Palette">
+    <HashRouter>
     {/* <BrowserRouter basename="/Your-Own-Crochet-Palette"> seems like gh-page do not support BR*/}
       <Routes>
-       <Route path="*" element={<DemoPage />}></Route>
+       <Route path="/" element={<DemoPage />}></Route>
        <Route path="login" element={<LoginPage />}></Route>
        <Route path="register" element={<RegisterPage />}></Route>
        <Route path="/user">
