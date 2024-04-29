@@ -6,12 +6,13 @@ import PalettePage from "../src/pages/myPalette";
 import CraftHubPage from "../src/pages/myCraftHub";
 import GalleryPage from "../src/pages/myGallery";
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
     <>
-    <BrowserRouter basename="/Your-Own-Crochet-Palette">
+    <HashRouter basename="/Your-Own-Crochet-Palette">
+    {/* <BrowserRouter basename="/Your-Own-Crochet-Palette"> seems like gh-page do not support BR*/}
       <Routes>
        <Route path="*" element={<DemoPage />}></Route>
        <Route path="login" element={<LoginPage />}></Route>
@@ -23,7 +24,8 @@ function App() {
         <Route path="gallery" element={<GalleryPage />}></Route>  
        </Route>
       </Routes>
-    </BrowserRouter>
+    {/* </BrowserRouter> */}
+    </HashRouter>
     </>
   )
 }
