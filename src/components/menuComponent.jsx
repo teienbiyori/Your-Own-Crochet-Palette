@@ -38,9 +38,9 @@ export function Menu(){
     setTimeout(()=>navigate("/login",1500))
   }
   return(<>
-    <MenuLink route="Your-Own-Crochet-Palette#/user/palette" text="My Palette " icon="fa-solid fa-swatchbook" />
-    <MenuLink route="Your-Own-Crochet-Palette#/user/crafthub" text="My Craft Hub " icon="fa-solid fa-brush" />
-    <MenuLink route="Your-Own-Crochet-Palette#/user/gallery" text="My Gallery " icon="fa-regular fa-image" />
+    <MenuLink route="/user/palette" text="My Palette " icon="fa-solid fa-swatchbook" />
+    <MenuLink route="/user/crafthub" text="My Craft Hub " icon="fa-solid fa-brush" />
+    <MenuLink route="/user/gallery" text="My Gallery " icon="fa-regular fa-image" />
     {isUserPage? "" : <MenuLink onClick={handleLogout} text="Log Out " icon="fa-solid fa-right-from-bracket" />}
   </>)
 }
