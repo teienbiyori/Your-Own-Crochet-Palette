@@ -16,12 +16,10 @@ function Intro(){
   return(<>
     <div className="intro-container">
       <div className="link-btn">
-        <div className="link-title">Pinkoi</div>
-        <a href="https://www.pinkoi.com/store/teienbiyori" target="_blank"><button><i className="fa-solid fa-cart-shopping"></i></button></a>
+        <a href="https://www.pinkoi.com/store/teienbiyori" target="_blank" className="link-title">Pinkoi<button><i className="fa-solid fa-cart-shopping"></i></button></a>
       </div>
       <div className="link-btn">
-        <div className="link-title">Github</div>
-        <a href="https://github.com/teienbiyori/Your-Own-Crochet-Palette" target="_blank"><button><i className="fa-brands fa-github"></i></button></a>
+        <a href="https://www.instagram.com/teienbiyori" target="_blank" className="link-title">Instagram<button><i className="fa-brands fa-square-instagram"></i></button></a>
       </div>
     </div>
   </>)

@@ -6,7 +6,7 @@ import PalettePage from "../src/pages/myPalette";
 import CraftHubPage from "../src/pages/myCraftHub";
 import GalleryPage from "../src/pages/myGallery";
 
-import { HashRouter, BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
