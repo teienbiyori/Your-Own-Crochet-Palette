@@ -9,8 +9,7 @@ import { Granny } from "../assets/granny";
 import SlidePhoto from "../components/swiper"; 
 import { GetMyCollection } from "../api/GetBrandPaletteData"
 import { RenderChosenPalette } from "../pages/myCraftHub"
-
-const myToken = localStorage.getItem("token")
+import { useEffect, useState } from "react";
 
 function Intro(){
   return(<>
@@ -43,7 +42,19 @@ function EachPattern({children, palette}){
 }
 
 export default function GalleryPage(){
-  const { collections } = GetMyCollection(myToken)
+  const [collections, setCollections] = useState([])
+  const fetchCollectionData = async() =>{
+    try{
+      const collectionsData = await GetMyCollection();
+      setCollections([...collectionsData])
+    }catch(e){
+      console.log("[error on gallery]" + e)
+    }
+  }
+  useEffect(()=>{
+    fetchCollectionData();
+  },[])
+  
   return(
     <>
     <MainHeader/>

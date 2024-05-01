@@ -19,6 +19,23 @@ axiosInstance.interceptors.request.use(
     }
 );
 
+//testing
+export const getBrandPaletteData2 = async() =>{
+  try{ 
+    const { data } = await axios.get(`${authURL}/brands`);
+    const brandsData = [...data];
+    return brandsData;
+  }catch(error){
+    if(error.response){
+      console.log("[something's wrong here]:"+ error.response.data)
+    }else{
+      console.log(error)
+    }
+  }
+}
+
+
+
 //token free /brands
 export function GetBrandPaletteData(){
   const [data, setData] = useState(null);
@@ -137,20 +154,15 @@ export function GetMyPaletteColor(){
   return {favColors, error}
 }
 
-
-export function GetMyCollection(){
-  const [collections, setCollections] = useState(null);
-  const [error, setError] = useState(null);
-  useEffect(()=>{
-    axiosInstance.get(`${authURL}/user/collections`)
-    .then((response)=>{
-      setCollections(response.data);
-    })
-    .catch((e)=>{
-      setError("[Failed getting favColors]:",e);
-    })
-  },[])
-  return {collections, error}
+//craft & gallery collection
+export const GetMyCollection = async() =>{
+  try{
+    const { data } = await axiosInstance.get(`${authURL}/user/collections`);
+    const collectionsData = [...data];
+    return collectionsData;
+  }catch(e){
+    console.log("[Failed to get myCollections]:" + e)
+  }
 }
 
 export function RemoveMyCollection(collectionId){
