@@ -3,7 +3,7 @@ import { Footer } from "../components/footer";
 import { MainContainer, MainWrapper } from "../components/wrapper";
 import { PaletteBtn, PaletteContainer } from "../components/paletteComponent";
 import { ColorSquare, MyOwnSquare } from "../components/colorSquare";
-import { GetBrandPaletteData, GetMyFavBrands, AddBrandToMine, RemoveBrandFromMine, GetMyPaletteColor, useAddColorToMine, useRemoveColorFromMine } from "../api/GetBrandPaletteData"
+import { GetBrandPaletteData, GetMyFavBrands2, AddBrandToMine, RemoveBrandFromMine, GetMyPaletteColor, useAddColorToMine, useRemoveColorFromMine } from "../api/GetBrandPaletteData"
 import { useEffect, useState } from "react"
 import { ChromePicker } from "react-color"
 // import { useContext, createContext } from "react"
@@ -19,7 +19,6 @@ const handleAddHex = ()=>{
   }
   props.onChildData(pickedColor)
 }
-
   return(<>
   <div className="picker-container">
     <ChromePicker color={pickedColor} onChangeComplete={handleGetHex} disableAlpha={true}/>
@@ -58,9 +57,35 @@ function ShowcaseChosenColors({array, onKidsData}){
 
 
 export default function PalettePage(){
-  const { data } = GetBrandPaletteData();
-  const brands = data;
-  const { favBrands } = GetMyFavBrands();
+  //render brands palette
+  const [brands, setBrands] = useState([]);
+  const fetchBrandsData = async() =>{
+    try{
+      const brandsData = await GetBrandPaletteData();
+      setBrands(brandsData);
+    }catch(e){
+      console.log("[Failed to get brandsData]:" + e)
+    }
+  }
+  useEffect(()=>{
+    fetchBrandsData();
+  },[])
+
+  //render myFavBrands
+  const [favBrands, setFavBrands] = useState([]);
+  const fetchMyBrandsData = async() =>{
+    try{
+      const favBrands = await GetMyFavBrands2();
+      setFavBrands(favBrands);
+    }catch(e){
+      console.log("[Failed to get favBrands]:" + e)
+    }
+  }
+  useEffect(()=>{
+    fetchMyBrandsData();
+  },[])
+
+
   const [brandID, setBrandID] = useState("");
   const [delBrandID, setDelBrandID] = useState("");
   AddBrandToMine(brandID);
@@ -99,6 +124,7 @@ export default function PalettePage(){
   }
   useRemoveColorFromMine(chosenDelColor)
 
+
   //minimize palette
   const [showPalette, setShowPalette] = useState([]);
   const handleShowPalette = (e) =>{
@@ -126,7 +152,7 @@ export default function PalettePage(){
       <PaletteContainer key={eachData._id} paletteName={eachData.brand.name} colorContainer="color-container"
       colors={showPalette.includes(eachData._id)? "": <ShowcaseColors brand={eachData.brand}/> }>
       <PaletteBtn btnId={eachData._id} btnClass="fa-solid fa-xmark" onClick={handleRemovePalette}/>
-      <PaletteBtn btnId={eachData._id} btnClass="fa-solid fa-minus" onClick={handleShowPalette}/>
+      <PaletteBtn btnId={eachData._id} btnClass={showPalette.includes(eachData._id)? "fa-solid fa-angles-down" : "fa-solid fa-angle-up"} onClick={handleShowPalette}/>
       </PaletteContainer>
     ))}
       </MainWrapper>
@@ -134,8 +160,8 @@ export default function PalettePage(){
       <MainWrapper>
     <h3># Brand Palette</h3>
     {brands?.map((brand)=>(<PaletteContainer key={brand.name} paletteName={brand.name} colorContainer="color-container" colors={showPalette.includes(brand._id)? "": <ShowcaseColors brand={brand}/>}> 
-      <PaletteBtn btnId={brand._id} btnClass="fa-solid fa-heart" onClick={handleAddPalette}/>
-      <PaletteBtn btnId={brand._id} btnClass="fa-solid fa-minus" onClick={handleShowPalette}/>
+      <PaletteBtn btnId={brand._id} btnClass={favBrands?.some((favBrand)=> favBrand.brand.name === brand.name)? "fa-solid fa-heart" : "fa-regular fa-heart"} onClick={handleAddPalette}/>
+      <PaletteBtn btnId={brand._id} btnClass={showPalette.includes(brand._id)? "fa-solid fa-angles-down" : "fa-solid fa-angle-up"} onClick={handleShowPalette}/>
     </PaletteContainer>))}
 </MainWrapper>
 </MainContainer>
@@ -143,3 +169,6 @@ export default function PalettePage(){
     </>
   )
 }
+
+
+

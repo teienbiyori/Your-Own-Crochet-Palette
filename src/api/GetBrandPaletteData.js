@@ -20,7 +20,20 @@ axiosInstance.interceptors.request.use(
 );
 
 //testing
-export const getBrandPaletteData2 = async() =>{
+export const GetMyFavBrands2 = async() =>{
+    try{
+      const { data } = await axiosInstance.get(`${authURL}/user/brands`);
+      const favBrands = [...data]
+      return favBrands;  
+    }catch(e){
+      console.log(e)
+    }
+}
+
+
+
+//token free /brands
+export const GetBrandPaletteData = async() =>{
   try{ 
     const { data } = await axios.get(`${authURL}/brands`);
     const brandsData = [...data];
@@ -32,23 +45,6 @@ export const getBrandPaletteData2 = async() =>{
       console.log(error)
     }
   }
-}
-
-
-
-//token free /brands
-export function GetBrandPaletteData(){
-  const [data, setData] = useState(null);
-  const [error, setError] = useState(null);
-    useEffect(()=>{
-    axios.get(`${authURL}/brands`).then((response)=>{
-      setData(response.data)
-    })
-    .catch((error)=>{
-      setError(error)
-    })
-    },[])
-  return {data, error};
 }
 
 ///user/brands  
@@ -154,7 +150,7 @@ export function GetMyPaletteColor(){
   return {favColors, error}
 }
 
-//craft & gallery collection
+///user/collections
 export const GetMyCollection = async() =>{
   try{
     const { data } = await axiosInstance.get(`${authURL}/user/collections`);

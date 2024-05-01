@@ -184,14 +184,27 @@ const SelectionContext = createContext();
 export default function CraftHubPage(){
   const { favBrands } = GetMyFavBrands();
   const { favColors } = GetMyPaletteColor();
-  const { collections } = GetMyCollection();
-
+  
   //color selected from palette
   const [selectedColor, setSelectedColor] =useState("");
   //selection render on pattern
   const [colorSelection, setColorSelection]= useState([
   "#614d3b", "#24201e", "#cac8c6", "#9f9089"]);
   const [delVersion, setDelVersion] = useState(false);
+
+  //render collections
+  const [collections, setCollections] = useState([])
+  const fetchCollectionData = async() =>{
+    try{
+      const collectionsData = await GetMyCollection();
+      setCollections([...collectionsData])
+    }catch(e){
+      console.log("[error on gallery]" + e)
+    }
+  }
+  useEffect(()=>{
+    fetchCollectionData();
+  },[])
 
 
   //minimize palette
