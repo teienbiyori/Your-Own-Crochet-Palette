@@ -20,7 +20,23 @@ axiosInstance.interceptors.request.use(
 );
 
 //testing
-
+export function RemoveBrandFromMine2(actionID){
+  const [delData, setDelData] = useState(null);
+  const [error, setError] = useState(null);
+  useEffect(()=>{
+    if(actionID.length===0){
+      return;
+    }
+    axiosInstance.delete(`${authURL}/user/brand/${actionID}`)
+    .then((response)=>{
+      setDelData(response.data);
+    })
+    .catch((e)=>{
+      setError(e);
+    })
+  },[actionID])
+  return {delData, error}
+}
 
 
 //token free /brands
@@ -39,24 +55,17 @@ export const GetBrandPaletteData = async() =>{
 }
 
 ///user/brands  
-export function AddBrandToMine(brandID){
-  const [actionId, setActionId] = useState(null);
-  const [error, setError] = useState(null);
-  useEffect(()=>{
-    if(brandID.length===0){
-      return;
-    }
-    axiosInstance.post(`${authURL}/user/brands`,{brandId:brandID})
-    .then((response)=>{
-      setActionId(response.data._id);
-      console.log(response.data._id);
-    })
-    .catch((e)=>{
-      setError(e.response.data.message);
-      alert(e.response.data.message)
-    })
-  },[brandID])
-  return {actionId, error}
+export const AddBrandToMine = async(brandID) =>{
+  if(brandID.length===0){
+    return;
+  }
+  try{
+    const { data } = await axiosInstance.post(`${authURL}/user/brands`,{brandId:brandID})
+    const actionId = data._id;
+    return actionId;
+  }catch(e){
+    alert(e.response.data.message);
+  }
 }
 export function RemoveBrandFromMine(actionID){
   const [delData, setDelData] = useState(null);

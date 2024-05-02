@@ -85,17 +85,17 @@ export default function PalettePage(){
     fetchMyBrandsData();
   },[])
 
-
-  const [brandID, setBrandID] = useState("");
+  //add/remove brands from mine 
   const [delBrandID, setDelBrandID] = useState("");
-  AddBrandToMine(brandID);
-  RemoveBrandFromMine(delBrandID);
  
-  const handleAddPalette = (e)=>{
+  const handleAddPalette = async(e)=>{
     if(e.target.id.length===0){
       return;
     }
-    setBrandID(e.target.id);
+    const actionId = await AddBrandToMine(e.target.id);
+    if(actionId){
+      await fetchMyBrandsData();
+    }
   } 
   const handleRemovePalette = (e)=>{
      if(e.target.id.length===0){
@@ -103,6 +103,7 @@ export default function PalettePage(){
     }
     setDelBrandID(e.target.id);
   }
+  RemoveBrandFromMine(delBrandID);
 
   //alert is working, but favColors is not realtime
   const [myFavColors, setMyFavColors] =useState([]);
