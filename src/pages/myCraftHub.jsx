@@ -182,8 +182,32 @@ function PaletteSelector(){
 const SelectionContext = createContext();
 
 export default function CraftHubPage(){
-  const { favBrands } = GetMyFavBrands();
-  const { favColors } = GetMyPaletteColor();
+  //favBrands
+  const [favBrands, setFavBrands] = useState([]);
+  const fetchMyBrandsData = async() =>{
+    try{
+      const favBrands = await GetMyFavBrands();
+      setFavBrands(favBrands);
+    }catch(e){
+      console.log("[Failed to get favBrands]:" + e)
+    }
+  }
+  useEffect(()=>{
+    fetchMyBrandsData();
+  },[])
+  //favColors
+  const [myFavColors, setMyFavColors] =useState([]);
+  const fetchFavColorsData = async() =>{
+    try{
+      const favColors = await GetMyPaletteColor();
+      setMyFavColors(favColors)
+    }catch(e){
+      console.log("[Failed to get favColors]:" + e)
+    }
+  }
+  useEffect(()=>{
+    fetchFavColorsData();
+  }, [])
   
   //color selected from palette
   const [selectedColor, setSelectedColor] =useState("");
@@ -239,7 +263,7 @@ export default function CraftHubPage(){
 
       <MainWrapper>
         <PaletteSelector/>
-        <PaletteContainer paletteName="My Palette" colorContainer="color-container" colors={showPalette.includes("my-palette-close")? "": <RenderChosenColors array={favColors}/>}>
+        <PaletteContainer paletteName="My Palette" colorContainer="color-container" colors={showPalette.includes("my-palette-close")? "": <RenderChosenColors array={myFavColors}/>}>
           <PaletteBtn btnId="my-palette-close" btnClass="fa-solid fa-minus" onClick={handleShowPalette}/>
         </PaletteContainer>
         {favBrands?.map((eachData)=> (<PaletteContainer key={eachData._id} paletteName={eachData.brand.name} colorContainer="color-container"
