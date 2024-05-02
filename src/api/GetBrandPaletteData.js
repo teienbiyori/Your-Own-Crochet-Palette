@@ -20,15 +20,6 @@ axiosInstance.interceptors.request.use(
 );
 
 //testing
-export const GetMyFavBrands2 = async() =>{
-    try{
-      const { data } = await axiosInstance.get(`${authURL}/user/brands`);
-      const favBrands = [...data]
-      return favBrands;  
-    }catch(e){
-      console.log(e)
-    }
-}
 
 
 
@@ -84,19 +75,14 @@ export function RemoveBrandFromMine(actionID){
   },[actionID])
   return {delData, error}
 }
-export function GetMyFavBrands(){
-  const [favBrands, setFavBrands] = useState(null);
-  const [error, setError] = useState(null);
-  useEffect(()=>{
-    axiosInstance.get(`${authURL}/user/brands`)
-    .then((response)=>{
-      setFavBrands(response.data);
-    })
-    .catch((e)=>{
-      setError("[Failed getting favBrands]:",e);
-    })
-  },[])
-  return {favBrands, error}
+export const GetMyFavBrands = async() =>{
+    try{
+      const { data } = await axiosInstance.get(`${authURL}/user/brands`);
+      const favBrands = [...data]
+      return favBrands;  
+    }catch(e){
+      console.log(e)
+    }
 }
 
 ///user/palettes
@@ -135,19 +121,14 @@ export function useRemoveColorFromMine(actionID){
   return {delData, error}
 }
 
-export function GetMyPaletteColor(){
-  const [favColors, setFavColors] = useState(null);
-  const [error, setError] = useState(null);
-  useEffect(()=>{
-    axiosInstance.get(`${authURL}/user/palettes`)
-    .then((response)=>{
-      setFavColors(response.data);
-    })
-    .catch((e)=>{
-      setError("[Failed getting favColors]:",e);
-    })
-  },[])
-  return {favColors, error}
+export const GetMyPaletteColor = async() =>{
+  try{
+    const { data } = await axiosInstance.get(`${authURL}/user/palettes`);
+    const favColors = [...data];
+    return favColors;
+  }catch(e){
+    console.log(e)
+  } 
 }
 
 ///user/collections

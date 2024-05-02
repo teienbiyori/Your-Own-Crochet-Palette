@@ -3,7 +3,7 @@ import { Footer } from "../components/footer";
 import { MainContainer, MainWrapper } from "../components/wrapper";
 import { PaletteBtn, PaletteContainer } from "../components/paletteComponent";
 import { ColorSquare, MyOwnSquare } from "../components/colorSquare";
-import { GetBrandPaletteData, GetMyFavBrands2, AddBrandToMine, RemoveBrandFromMine, GetMyPaletteColor, useAddColorToMine, useRemoveColorFromMine } from "../api/GetBrandPaletteData"
+import { GetBrandPaletteData, GetMyFavBrands, AddBrandToMine, RemoveBrandFromMine, GetMyPaletteColor, useAddColorToMine, useRemoveColorFromMine } from "../api/GetBrandPaletteData"
 import { useEffect, useState } from "react"
 import { ChromePicker } from "react-color"
 // import { useContext, createContext } from "react"
@@ -75,7 +75,7 @@ export default function PalettePage(){
   const [favBrands, setFavBrands] = useState([]);
   const fetchMyBrandsData = async() =>{
     try{
-      const favBrands = await GetMyFavBrands2();
+      const favBrands = await GetMyFavBrands();
       setFavBrands(favBrands);
     }catch(e){
       console.log("[Failed to get favBrands]:" + e)
@@ -105,8 +105,33 @@ export default function PalettePage(){
   }
 
   //alert is working, but favColors is not realtime
-  const { favColors } = GetMyPaletteColor();
-  const allColors = favColors?.map((color)=>(color.hexCode))
+  const [myFavColors, setMyFavColors] =useState([]);
+  const [allColors, setAllColors] = useState([]);
+  const fetchFavColorsData = async() =>{
+    try{
+      const favColors = await GetMyPaletteColor();
+      setMyFavColors(favColors)
+      setAllColors([...favColors].map((color)=>{return color.hexCode}))
+    }catch(e){
+      console.log("[Failed to get favColors]:" + e)
+    }
+  }
+
+  useEffect(()=>{
+    fetchFavColorsData();
+  }, [])
+
+  const handleReorderPalette = () =>{
+    const ascendingOrder = [...myFavColors].map((color)=>color.hexCode).sort((a,b)=>{return parseInt(a.replace("#",""),16)-parseInt(b.replace("#",""),16)})
+    const reorderedPalette = []
+    for(let i = 0; i < ascendingOrder.length; i++){
+      const hexcode = ascendingOrder[i];
+      const matchingColor = [...myFavColors].find((color)=>color.hexCode === hexcode)
+      reorderedPalette.push(matchingColor)
+    }
+    setMyFavColors(reorderedPalette);
+  }
+
   const [chosenColor, setChosenColor] = useState("");
   const handleAddToMine = (pickedColor) =>{ 
     if(allColors.includes(pickedColor)){
@@ -145,8 +170,8 @@ export default function PalettePage(){
       <MainWrapper>
         <h3># My Palette</h3>
     <PaletteContainer 
-    picker={<ColorPicker  onChildData={handleAddToMine}/>} colorContainer="color-container" colors={ <ShowcaseChosenColors onKidsData={handleRemoveFromMine} array={favColors}/>} paletteName="Create your Own">
-      <PaletteBtn btnId="edit-palette" btnClass="fa-solid fa-pen" />
+    picker={<ColorPicker  onChildData={handleAddToMine}/>} colorContainer="color-container" colors={ <ShowcaseChosenColors onKidsData={handleRemoveFromMine} array={myFavColors}/>} paletteName="Create your Own">
+      <PaletteBtn btnId="edit-palette" btnClass="fa-solid fa-pen" onClick={handleReorderPalette}/>
     </PaletteContainer>
     {favBrands?.map((eachData)=>(
       <PaletteContainer key={eachData._id} paletteName={eachData.brand.name} colorContainer="color-container"
