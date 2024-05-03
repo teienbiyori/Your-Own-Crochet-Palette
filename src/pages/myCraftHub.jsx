@@ -3,7 +3,7 @@ import { Footer } from "../components/footer";
 import { MainContainer, MainWrapper } from "../components/wrapper";
 import { PaletteBtn, PaletteContainer } from "../components/paletteComponent";
 import { ColorSquare, SelectorSquare, PaletteSquare } from "../components/colorSquare";
-import { AddSelectionToMine, RemoveMyCollection, GetMyCollection, GetMyFavBrands, GetMyPaletteColor, RemoveMyCollection2 } from "../api/GetBrandPaletteData"
+import { AddSelectionToMine, RemoveMyCollection, GetMyCollection, GetMyFavBrands, GetMyPaletteColor } from "../api/GetBrandPaletteData"
 import { Snowfall } from "../assets/snowfall"
 import { Honey } from "../assets/honey"
 import { Rainbow } from "../assets/rainbow"
@@ -12,6 +12,7 @@ import { Autumn } from "../assets/autumn"
 import { useLocation } from "react-router-dom"
 import { useState, createContext, useEffect } from "react"
 import { useContext } from "react"
+import Swal from "sweetalert2";
 
 
 export function RenderColors({brand}){
@@ -124,7 +125,7 @@ function PaletteCollection({array, collectionId}){
   }
 
   const handleRemoveCollection = async()=>{
-    const colorSchemaId = await RemoveMyCollection2(collectionId);
+    const colorSchemaId = await RemoveMyCollection(collectionId);
     if(colorSchemaId){
       const collectionsData = await GetMyCollection();
       setCollections([...collectionsData])
@@ -215,7 +216,6 @@ export default function CraftHubPage(){
   const [colorSelection, setColorSelection]= useState([
   "#614d3b", "#24201e", "#cac8c6", "#9f9089"]);
   
-
   //render collections
   const [collections, setCollections] = useState([])
   const fetchCollectionData = async() =>{
@@ -247,6 +247,20 @@ export default function CraftHubPage(){
 
   //switch mode
   const [delVersion, setDelVersion] = useState(false);
+  const handleSwitchMode = () =>{
+    setDelVersion(!delVersion)
+    if(delVersion === false){
+      Swal.fire({
+        icon: "warning",
+        title: "DELETE mode activated!",
+        showConfirmButton: false,
+        timer: 1500,
+        iconColor:"#614d3b",
+        color: "#24201e",
+        background: "#ece7e0",
+      });
+    }
+  }
 
   return(
     <>
@@ -256,10 +270,10 @@ export default function CraftHubPage(){
       <MainWrapper>
         <CraftHubContainer colorArray={colorSelection}/>
         <PaletteContainer
-        paletteName={delVersion? "Remove Mode":"My Collection"}
+        paletteName={delVersion? "Delete Mode":"My Collection"}
         colorContainer="collection-container" 
         colors={showPalette.includes("my-collection-close")? "" : collections?.map((collection)=>(<PaletteCollection key={collection._id} collectionId={collection._id} array={collection.colorSchema}/>))}>
-      <PaletteBtn btnId="tag-delete" btnClass="fa-regular fa-trash-can" onClick={()=>{setDelVersion(!delVersion)}}/>
+      <PaletteBtn btnId="tag-delete" btnClass="fa-regular fa-trash-can" onClick={handleSwitchMode}/>
       <PaletteBtn btnId="my-collection-close" btnClass="fa-solid fa-minus" onClick={handleShowPalette}/>
         </PaletteContainer>
       </MainWrapper>
