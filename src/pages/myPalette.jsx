@@ -6,7 +6,6 @@ import { ColorSquare, MyOwnSquare } from "../components/colorSquare";
 import { GetBrandPaletteData, GetMyFavBrands, AddBrandToMine, RemoveBrandFromMine, GetMyPaletteColor, useAddColorToMine, useRemoveColorFromMine } from "../api/GetBrandPaletteData"
 import { useEffect, useState } from "react"
 import { ChromePicker } from "react-color"
-// import { useContext, createContext } from "react"
 
 function ColorPicker(props){
 const [pickedColor, setPickedColor] = useState("")
@@ -140,8 +139,7 @@ export default function PalettePage(){
  useEffect(()=>{
   if(hexcodeId){
     fetchFavColorsData();
-  }
- },[hexcodeId])
+  }},[hexcodeId])
 
   const [chosenDelColor, setChosenDelColor] = useState("");
   const handleRemoveFromMine = (picked) => {

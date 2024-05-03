@@ -148,19 +148,15 @@ export function RemoveMyCollection(collectionId){
   return {delId, error}
 }
 
-export function AddSelectionToMine(colorArray){
-  const [collectionId, setCollectionId] = useState(null);
-  const [error, setError] = useState(null);
-  useEffect(()=>{
-    if(colorArray?.length>0){
-    axiosInstance.post(`${authURL}/user/collections`, {colorSchema:colorArray})
-    .then((response)=>{
-      setCollectionId(response.data);
-    })
-    .catch((e)=>{
-      setError(e.response);
-    })
-    }
-  },[colorArray])
-  return {collectionId, error}
+export const AddSelectionToMine = async(colorArray) => {
+  if(colorArray?.length === 0){
+    return;
+  }
+  try{
+    const {data} = await axiosInstance.post(`${authURL}/user/collections`, {colorSchema:colorArray})
+    const colorSchemaId = data._id;
+    return colorSchemaId;
+  }catch(e){
+    console.log(e)
+  }
 }

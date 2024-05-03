@@ -138,8 +138,7 @@ function PaletteCollection({array, collectionId}){
 
 
 function PaletteSelector(){
-  const { colorSelection, setColorSelection} =useContext(SelectionContext);
-  const [colorArray, setColorArray] = useState([]);
+  const { setCollections, colorSelection, setColorSelection} =useContext(SelectionContext);
 
   const handleShuffle = ()=>{
     const shuffledSelection = [...colorSelection];
@@ -154,15 +153,15 @@ function PaletteSelector(){
     setColorSelection(["#614d3b", "#24201e", "#cac8c6", "#9f9089"])
   }
 
-  const handleAddCollection = () =>{
+  const handleAddCollection = async() =>{
     const jsonSelection = JSON.stringify(colorSelection)
     const jsonParseSelection = JSON.parse(jsonSelection)
-    setColorArray(jsonParseSelection)
+    const colorSchemaId = await AddSelectionToMine(jsonParseSelection)
+    if(colorSchemaId){
+      const collectionsData = await GetMyCollection();
+      setCollections([...collectionsData])
+    }
   }
-  AddSelectionToMine(colorArray)
-
-  //aviod 
-  useEffect(()=>{},[colorSelection])
  
   return(<>
   <div className="selection-area">
@@ -249,7 +248,7 @@ export default function CraftHubPage(){
     <>
     <MainHeader/>
     <MainContainer>
-      <SelectionContext.Provider value={{ selectedColor, setSelectedColor, colorSelection, setColorSelection, delVersion }}>
+      <SelectionContext.Provider value={{ setCollections, selectedColor, setSelectedColor, colorSelection, setColorSelection, delVersion }}>
       <MainWrapper>
         <CraftHubContainer colorArray={colorSelection}/>
         <PaletteContainer
