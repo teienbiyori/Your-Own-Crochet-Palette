@@ -19,6 +19,7 @@ const handleAddHex = ()=>{
   }
   props.onChildData(pickedColor)
 }
+
   return(<>
   <div className="picker-container">
     <ChromePicker color={pickedColor} onChangeComplete={handleGetHex} disableAlpha={true}/>
@@ -37,21 +38,14 @@ function ShowcaseColors({brand}){
 }
 
 function ShowcaseChosenColors({array, onKidsData}){
-  const [picked, setPicked] = useState("");
-  const [isActive, setIsActive] = useState("")
-  const handleGetHex = (e) =>{
-    setPicked(e.target.id);
-    setIsActive(e.target.id);
-  }
-  const handleDelHex = ()=>{
-    if(picked===""){
+  const handleDelHex = (e)=>{
+    if(e.target.id===""){
       return;
     }
-    onKidsData(picked)
+    onKidsData(e.target.id)
   }
     return(<>
-      <button className="delete-color" onClick={handleDelHex}><i className="fa-regular fa-trash-can"></i></button>
-      {array?.map((color)=>(<MyOwnSquare id={color._id} key={color._id} hexcode={color.hexCode} onClick={handleGetHex} picked={isActive === color._id}/> ))}
+      {array?.map((color)=>(<MyOwnSquare id={color._id} key={color._id} hexcode={color.hexCode} ><button id={color._id} className="delete-color-btn" onClick={handleDelHex}><i id={color._id} className="fa-regular fa-trash-can fa-xs"></i></button></MyOwnSquare> ))}
     </>)
 }
 
@@ -134,7 +128,7 @@ export default function PalettePage(){
   }
 
   const [chosenColor, setChosenColor] = useState("");
-  const handleAddToMine = (pickedColor) =>{ 
+  const handleAddToMine = async(pickedColor) =>{ 
     if(allColors.includes(pickedColor)){
       alert("The color you've selected has already been picked :D")
       return;
@@ -142,14 +136,23 @@ export default function PalettePage(){
       setChosenColor(pickedColor);
     }
   }
-  useAddColorToMine(chosenColor)
+  const {hexcodeId} = useAddColorToMine(chosenColor)
+ useEffect(()=>{
+  if(hexcodeId){
+    fetchFavColorsData();
+  }
+ },[hexcodeId])
 
   const [chosenDelColor, setChosenDelColor] = useState("");
   const handleRemoveFromMine = (picked) => {
     setChosenDelColor(picked)
   }
-  useRemoveColorFromMine(chosenDelColor)
-
+  const {delData} = useRemoveColorFromMine(chosenDelColor)
+  useEffect(()=>{
+    if(delData){
+      fetchFavColorsData();
+    }
+  },[delData])
 
   //minimize palette
   const [showPalette, setShowPalette] = useState([]);

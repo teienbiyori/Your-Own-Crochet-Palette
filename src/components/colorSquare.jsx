@@ -21,6 +21,7 @@ const StyledColorSquare =styled.div`
 
 //Selectable squares in create my own section 
 const StyledMyOwnSquare =styled.div`
+  position: relative;
   height: 2rem;
   width: 1.5rem;
   border-radius: 0.2rem;
@@ -31,12 +32,7 @@ const StyledMyOwnSquare =styled.div`
     outline: 0.15rem solid rgba(36, 32, 30, 0.3);
   }
   &:active {
-    outline: 0.15rem solid rgba(36, 32, 30, 0.8);
-  }
-  ${
-    props => props?.picked &&`
     outline: 0.15rem solid rgba(36, 32, 30, 0.5);
-    `
   }
 `
 
