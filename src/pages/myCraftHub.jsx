@@ -274,18 +274,18 @@ export default function CraftHubPage(){
         colorContainer="collection-container" 
         colors={showPalette.includes("my-collection-close")? "" : collections?.map((collection)=>(<PaletteCollection key={collection._id} collectionId={collection._id} array={collection.colorSchema}/>))}>
       <PaletteBtn btnId="tag-delete" btnClass="fa-regular fa-trash-can" onClick={handleSwitchMode}/>
-      <PaletteBtn btnId="my-collection-close" btnClass="fa-solid fa-minus" onClick={handleShowPalette}/>
+      <PaletteBtn btnId="my-collection-close" btnClass={showPalette.includes("my-collection-close")? "fa-solid fa-angles-down" : "fa-solid fa-angle-up"} onClick={handleShowPalette}/>
         </PaletteContainer>
       </MainWrapper>
 
       <MainWrapper>
         <PaletteSelector/>
         <PaletteContainer paletteName="My Palette" colorContainer="color-container" colors={showPalette.includes("my-palette-close")? "": <RenderChosenColors array={myFavColors}/>}>
-          <PaletteBtn btnId="my-palette-close" btnClass="fa-solid fa-minus" onClick={handleShowPalette}/>
+          <PaletteBtn btnId="my-palette-close" btnClass={showPalette.includes("my-palette-close")? "fa-solid fa-angles-down" : "fa-solid fa-angle-up"} onClick={handleShowPalette}/>
         </PaletteContainer>
         {favBrands?.map((eachData)=> (<PaletteContainer key={eachData._id} paletteName={eachData.brand.name} colorContainer="color-container"
       colors={showPalette.includes(eachData._id)? "" :<RenderColors brand={eachData.brand}/>}>
-      <PaletteBtn btnId={eachData._id} btnClass="fa-solid fa-minus" onClick={handleShowPalette}/>
+      <PaletteBtn btnId={eachData._id} btnClass={showPalette.includes(eachData._id)? "fa-solid fa-angles-down" : "fa-solid fa-angle-up"} onClick={handleShowPalette}/>
       </PaletteContainer>
     ))} 
       </MainWrapper>
