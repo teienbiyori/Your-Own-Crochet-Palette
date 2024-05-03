@@ -3,7 +3,7 @@ import { Footer } from "../components/footer";
 import { MainContainer, MainWrapper } from "../components/wrapper";
 import { PaletteBtn, PaletteContainer } from "../components/paletteComponent";
 import { ColorSquare, SelectorSquare, PaletteSquare } from "../components/colorSquare";
-import { AddSelectionToMine, RemoveMyCollection, GetMyCollection, GetMyFavBrands, GetMyPaletteColor } from "../api/GetBrandPaletteData"
+import { AddSelectionToMine, RemoveMyCollection, GetMyCollection, GetMyFavBrands, GetMyPaletteColor, RemoveMyCollection2 } from "../api/GetBrandPaletteData"
 import { Snowfall } from "../assets/snowfall"
 import { Honey } from "../assets/honey"
 import { Rainbow } from "../assets/rainbow"
@@ -118,17 +118,18 @@ function CraftHubContainer({colorArray}){
 }
 
 function PaletteCollection({array, collectionId}){
-  const {setColorSelection, delVersion} =useContext(SelectionContext);
-  const [delId, setDelId] = useState("");
+  const {setCollections, setColorSelection, delVersion} =useContext(SelectionContext);
   const handleCollectionClicked = () =>{
     setColorSelection(array)
   }
 
-  const handleRemoveCollection = ()=>{
-    setDelId(collectionId)
+  const handleRemoveCollection = async()=>{
+    const colorSchemaId = await RemoveMyCollection2(collectionId);
+    if(colorSchemaId){
+      const collectionsData = await GetMyCollection();
+      setCollections([...collectionsData])
+    }
   }
- RemoveMyCollection(delId);
-
   return(<>
   <div className="path-palette" onClick={delVersion? handleRemoveCollection: handleCollectionClicked }>
     <RenderChosenPalette array={array}/>
@@ -213,7 +214,7 @@ export default function CraftHubPage(){
   //selection render on pattern
   const [colorSelection, setColorSelection]= useState([
   "#614d3b", "#24201e", "#cac8c6", "#9f9089"]);
-  const [delVersion, setDelVersion] = useState(false);
+  
 
   //render collections
   const [collections, setCollections] = useState([])
@@ -243,6 +244,9 @@ export default function CraftHubPage(){
         setShowPalette((prev) => [...prev, minmaxPalette]);
       }
   }
+
+  //switch mode
+  const [delVersion, setDelVersion] = useState(false);
 
   return(
     <>

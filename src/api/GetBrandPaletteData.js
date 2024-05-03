@@ -19,10 +19,6 @@ axiosInstance.interceptors.request.use(
     }
 );
 
-//testing
-
-
-
 //token free /brands
 export const GetBrandPaletteData = async() =>{
   try{ 
@@ -130,22 +126,17 @@ export const GetMyCollection = async() =>{
   }
 }
 
-export function RemoveMyCollection(collectionId){
-  const [delId, setDelId] = useState(null);
-  const [error, setError] = useState(null);
-  useEffect(()=>{
+export const RemoveMyCollection = async(collectionId)=>{
     if(collectionId.length===0){
       return;
     }
-    axiosInstance.delete(`${authURL}/user/collection/${collectionId}`)
-    .then((response)=>{
-      setDelId(response.data);
-    })
-    .catch((e)=>{
-      setError("[Failed getting favColors]:",e.response);
-    })
-  },[collectionId])
-  return {delId, error}
+    try{
+      const {data} = await axiosInstance.delete(`${authURL}/user/collection/${collectionId}`)
+      const colorSchemaId = data._id;
+      return colorSchemaId;
+    }catch(e){
+      console.log(e)
+    }
 }
 
 export const AddSelectionToMine = async(colorArray) => {
