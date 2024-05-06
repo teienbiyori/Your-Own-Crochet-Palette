@@ -73,8 +73,6 @@ npm run dev
 - styled-components: "^6.1.8"
 - sweetalert2: "^11.10.7"<br>
 
-
-
 ### Roadmap
 Our roadmap includes the following upcoming features:
 1. **Yarn Supplier Palette Form**
@@ -85,4 +83,7 @@ Our roadmap includes the following upcoming features:
    - Improve the user experience by displaying the brand name of each color when the mouse hovers over it in the palette. Knowing the brand name will enable users to easily locate and purchase the specific yarn needed to bring their project designs to life.
 
 
+### Contributors
+##### Back-End - [@Tommy0901](https://github.com/Tommy0901)
+##### Front-End & UI/UX - **teienbiyori Dra**
 
