@@ -2,6 +2,11 @@
 ##### 為鉤針編織創作者設計的織片配色網站
 ##### かぎ針編みクリエーター向けのカラーコンビネーションウェブサイト
 
+<div style="width:100%; display: flex; justify-content: center;">
+<img src="screenshots/landingPage.jpg" alt="LandingPages" style="max-width: 250px; margin: 0 10px;">
+<img src="screenshots/paletteGallery.jpg" alt="paletteGallery" style="max-width: 250px; margin: 0 10px;">
+</div>
+<br>
 This webpage is tailored for crochet enthusiasts to store their personalized color palettes.<br> 
 Users can apply these palettes directly to crochet patterns, offering a clearer visualization of how selected color combinations will appear on their products.<br>
 By automating color blending and providing inspiration for combinations, this tool saves creators time and sparks new ideas for stunning color schemes.<br>
@@ -10,6 +15,8 @@ By automating color blending and providing inspiration for combinations, this to
 透過以上功能，可以立即且直觀地呈現織片的實際配色。<br>
 你再也不用靠想像、手繪，或者實際把織片鉤出來才知道配色滿不滿意，輕鬆按幾個按鈕便能做到！<br>
 </span>
+
+##### [Take a 30-second peek at Instagram Reels](https://www.instagram.com/reel/C6hBS7hPK5p/)
 
 ### Features
 1. **Users can create their own crochet palettes:**
@@ -31,6 +38,11 @@ Welcome to "Craft Your Own Crochet Palette". Below are the main pages of the web
    - (according to Feature 2 & 3)
 4. **My Gallery**
    - (according to Feature 4)<br>
+
+<div style="width:100%; display: flex; justify-content: center;">
+<img src="screenshots/craftPageFn.jpg" alt="craftPageFn1" style="max-width: 250px; margin: 0 10px;">
+<img src="screenshots/craftPageFn2.jpg" alt="craftPageFn2" style="max-width: 250px; margin: 0 10px;">
+</div>
 
 ### Getting Started
 To get started with this project, follow these steps:
@@ -69,7 +81,7 @@ npm run dev
 Our roadmap includes the following upcoming features:
 1. **Yarn Supplier Palette Form**
    - Implement a form page that allows yarn suppliers to showcase their color palettes by adding the specific colors they offer. This feature will enable suppliers to reach more crocheters and knitters by showcasing the range of yarn colors available. 
-2. **Palette Reordering**
+2. **Palette Reordering** (Feature updated and completed as of April 2024)
    - Implement a functional button to reorder colors in the palette based on ascending hexcode values. This upcoming feature will simplify navigation and help users quickly locate specific colors within the palette. It enhances usability and aesthetics by organizing colors in a more structured and visually appealing manner.
 3. **Display Brand Name on Color Hover**
    - Improve the user experience by displaying the brand name of each color when the mouse hovers over it in the palette. Knowing the brand name will enable users to easily locate and purchase the specific yarn needed to bring their project designs to life.
