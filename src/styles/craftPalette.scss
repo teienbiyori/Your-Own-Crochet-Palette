@@ -158,8 +158,10 @@ button {
         justify-content: space-around;
         .path {
           border: 2px solid #cac8c6;
-          height: 3rem;
-          width: 3rem;
+          height: 3rem; //need to check
+          width: 3rem; //
+          height: 100%;
+          width: 100%;
         }
       } 
       .path-area {
@@ -248,12 +250,17 @@ button {
   grid-gap: 1rem;
   .each-pattern {
     display: flex;
+  .pattern-wrapper{
+    width: 7.5rem;
+    height: 7.5rem;
+  }
   .pattern {
-      width: 7rem;
-      height: 7rem;
+    width: 100%;
+    height: 100%;
     }
    .pattern-info {
-    width: calc(100% - 7.5rem);
+    width: calc(100% - 8rem);
+    height: 7.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;

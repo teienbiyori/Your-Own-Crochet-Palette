@@ -9,7 +9,8 @@ import { Granny } from "../assets/granny";
 import SlidePhoto from "../components/swiper"; 
 import { GetMyCollection } from "../api/GetBrandPaletteData"
 import { RenderChosenPalette } from "../pages/myCraftHub"
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import { exportComponentAsPNG } from "react-component-export-image";
 
 function Intro(){
   return(<>
@@ -25,16 +26,22 @@ function Intro(){
 }
 
 function EachPattern({children, palette}){
+  const favConbination = useRef();
+  const handleExport = () => {
+    exportComponentAsPNG(favConbination);
+  }
   return(
     <>
-    <div className="each-pattern">
-      {children}
+    <div className="each-pattern" ref={favConbination}>
+      <div className="pattern-wrapper">
+        {children}
+      </div>
       <div className="pattern-info">
         <div className="palette-info">
           <input className="palette-name" type="text" placeholder="palette-name" defaultValue="teienbiyori"/>
           <div className="fav-palette">{palette}</div>
         </div>
-        <button><i className="fa-regular fa-paper-plane"></i></button>
+        <button onClick={handleExport}><i className="fa-regular fa-paper-plane"></i></button>
       </div>
     </div>
     </>
