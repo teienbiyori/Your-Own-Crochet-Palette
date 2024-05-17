@@ -24,7 +24,8 @@ By automating color blending and providing inspiration for combinations, this to
    - Randomly shuffle the applied color combinations on the pattern.
    - Manually change the color combinations on the pattern.
 3. **Users can save their personal color combinations.**
-4. **Users can view all patterns showcasing each color combination.**<br>
+4. **Users can view all patterns showcasing each color combination.**
+5. **Users can export their personal colored-pattern.**(Feature completed as of May 2024)<br>
 
 ### Pages Overview
 Welcome to "Craft Your Own Crochet Palette". Below are the main pages of the website and their functions:
@@ -35,7 +36,7 @@ Welcome to "Craft Your Own Crochet Palette". Below are the main pages of the web
 3. **My Craft Hub**
    - (according to Feature 2 & 3)
 4. **My Gallery**
-   - (according to Feature 4)<br>
+   - (according to Feature 4 & 5)<br>
 
 <div>
 <img src="screenshots/craftPageFn.jpg" alt="craftPageFn1" style="width: 250px;">
@@ -71,7 +72,8 @@ npm run dev
 - react-router-dom: "^6.22.3"
 - sass: "^1.75.0"
 - styled-components: "^6.1.8"
-- sweetalert2: "^11.10.7"<br>
+- sweetalert2: "^11.10.7"
+- react-component-export-image: "^1.0.6",<br>
 
 ### Roadmap
 Our roadmap includes the following upcoming features:
