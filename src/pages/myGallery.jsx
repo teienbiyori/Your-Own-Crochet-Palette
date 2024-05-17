@@ -26,13 +26,17 @@ function Intro(){
 }
 
 function EachPattern({children, palette}){
-  const favConbination = useRef();
+  const favCombinationRef = useRef();
   const handleExport = () => {
-    exportComponentAsPNG(favConbination);
+    if (favCombinationRef) {
+      exportComponentAsPNG(favCombinationRef);
+    } else {
+      console.error('favCombinationRef.current is not defined');
+    }
   }
   return(
     <>
-    <div className="each-pattern" ref={favConbination}>
+    <div className="each-pattern" ref={favCombinationRef}>
       <div className="pattern-wrapper">
         {children}
       </div>
