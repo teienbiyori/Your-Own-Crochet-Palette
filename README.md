@@ -62,7 +62,7 @@ npm install
 npm run dev
 ```
 
-### Dependnecies
+### Dependencies
 - axios: "^1.6.8"
 - clsx: "^2.1.0"
 - react: "^18.2.0"
